@@ -1,9 +1,9 @@
 Kichesippi-03
 =============
 
-A delta design 3D printer.
+A delta style 3D printer.
 
-Initial project will be aimed at getting an initial printer platform established.
+Initial project will be aimed at getting an proof of concept 3D printer platform established.
 
 
 Drive System:
