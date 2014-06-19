@@ -25,25 +25,23 @@ module cBearingPost (x, y, z) {
 			
 		// bearing holder
 		difference() {
-			// bearing holder
 			translate([0,0,5.2]) {
-				cylinder(r=4.1, h= 7, $fn = RENDER_RESOLUTION);
+				cylinder(r=hw608BoreRadius, h= 7, $fn = RENDER_RESOLUTION);
 				
 			}
-			translate([0,0,5.2]) {
-				cylinder(r=2.3, h =7, $fn = RENDER_RESOLUTION);
+			translate([0,0,5.0]) {
+				cylinder(r=hwBoltRadius, h =7.2, $fn = RENDER_RESOLUTION);
 			}
 		}
 		
 		// spacer ridge
 		difference() {
-			// bearing holder
 			translate([0,0,12.2]) {
-				cylinder(r=3.1, h= 1, $fn = RENDER_RESOLUTION);
+				cylinder(r=hw608BoreRadius - 0.5, h= 1.5, $fn = RENDER_RESOLUTION);
 				
 			}
 			translate([0,0,12.2]) {
-				cylinder(r=2.3, h =1, $fn = RENDER_RESOLUTION);
+				cylinder(r=hwBoltRadius, h =1.5, $fn = RENDER_RESOLUTION);
 			}
 		}
 		
@@ -53,4 +51,4 @@ module cBearingPost (x, y, z) {
 } // module
 
 cBearingPost (0,0,0);
-//cBearingPost (40,0,0);
+cBearingPost (30,0,0);

@@ -11,10 +11,12 @@ HARDWARE_METRIC = false;
 
 hwNutRadius = HARDWARE_METRIC ? 0 : 4.8;
 hwWasherRadius = HARDWARE_METRIC ? 0 : 6;
-hwBoltRadius = HARDWARE_METRIC ? 0 : 4.6;
+hwBoltRadius = HARDWARE_METRIC ? 2.3 : 2.4;
+
 
 // 608zz Bearing Dimensions
 
 hw608InnerRingRadius = 6;
+hw608BoreRadius = 4.1;
 
 RENDER_RESOLUTION = 100;
