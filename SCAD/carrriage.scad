@@ -29,7 +29,7 @@ module cBearingPost (x, y, z) {
 				cylinder(r=hw608BoreRadius, h= 7, $fn = RENDER_RESOLUTION);
 				
 			}
-			translate([0,0,5.0]) {
+			translate([0,0,5.2]) {
 				cylinder(r=hwBoltRadius, h =7.2, $fn = RENDER_RESOLUTION);
 			}
 		}
@@ -50,27 +50,5 @@ module cBearingPost (x, y, z) {
 	} // translate
 } // module
 
-doublePostSpacing = 40;
-
-// test joiner bit
-difference() {
-	translate([doublePostSpacing / 2, 0, 0.5]) {
-		cube(size=[doublePostSpacing, 15.2, 1], center = true);
-	}
-	cylinder(r = hwWasherRadius, h = 4.2, $fn = RENDER_RESOLUTION);		// cutout for the washer/bolt
-	translate([doublePostSpacing, 0, 0]) {
-		cylinder(r = hwWasherRadius, h = 4.2, $fn = RENDER_RESOLUTION);		// cutout for the washer/bolt
-	}
-}
-
-translate([doublePostSpacing /2 , 6.75, 2]) {
-	cube(size=[doublePostSpacing, 1.7, 4], center = true);
-}
-
-translate([doublePostSpacing /2 , -6.75, 2]) {
-	cube(size=[doublePostSpacing, 1.7, 4], center = true);
-}
-
 cBearingPost (0,0,0);
-cBearingPost (doublePostSpacing,0,0);
 

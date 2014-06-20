@@ -19,4 +19,4 @@ hwBoltRadius = HARDWARE_METRIC ? 2.3 : 2.4;
 hw608InnerRingRadius = 6;
 hw608BoreRadius = 4.1;
 
-RENDER_RESOLUTION = 100;
+RENDER_RESOLUTION = 50;
