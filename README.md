@@ -21,9 +21,9 @@ v3.11 introduces OpenSCAD scripted parts in the effector portion to allow for ea
 - This creates a paralellogram of two rod assemblies with a <u>Pin Swivel Arm<u> at each end
 
 Parts for the assembly:
-(6) 300mm x 6.4mm round aluminum rod
-(6) printed <u>Pin Swivel Arm</u>
-(36) 7.8mm x 3.6mm round steel bicycle chain pins
+- (6) 300mm x 6.4mm round aluminum rod
+- (6) printed <u>Pin Swivel Arm</u>
+- (36) 7.8mm x 3.6mm round steel bicycle chain pins (note be careful when using chain scraps that all 36 pins are the same size)
 
 
 
