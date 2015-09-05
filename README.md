@@ -11,8 +11,8 @@ Version Notes
 
 v3.11 introduces OpenSCAD scripted parts in the effector portion to allow for easy customization and revision.
 
-Pin Swivels
---------------------------------------------------------------------------------
+<b>Pin Swivels</b>
+
 
 Initial project will be aimed at getting an proof of concept 3D printer platform established.
 
