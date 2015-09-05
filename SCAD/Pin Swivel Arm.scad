@@ -10,3 +10,11 @@
 // *****************************************************************************
 
 include <OpenSCAD-Utilities/Hardware - Metric.scad>
+
+# some dimensions
+
+// Pin - Bicycle chain pins extracted from chain for 5~6-speed cassette
+
+hw_Pin_Diameter = 3.6;	// bicycle chain pin diameter (in mm)
+hw_Pin_Length = 7.8;	// bicycle chain pin length (in mm)
+

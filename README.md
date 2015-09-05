@@ -5,6 +5,7 @@ The Kitchissippi K03 is a prototype delta style 3D printer.
 It is designed as a RepRap type printer that uses many easily available parts.
 
 The early versions have proven that the concept works well, however it requires refinement.
+Home Page: https://www.kitchissippi-robotics.com/
 
 Version Notes
 --------------------------------------------------------------------------------
@@ -13,8 +14,17 @@ v3.11 introduces OpenSCAD scripted parts in the effector portion to allow for ea
 
 <b>Pin Swivels</b>
 
+- Each swivel joint has <i>(6) Pins</i> inserted into a <u>Pin Swivel Arm</u>
+- Each <u>Rod End</u> will be attached to the rod and glued into place while level
+- <u>Rod Ends</u> will then snap-fit over the pins on the <u>Pin Swivel Arm</u>
+- This is done for two rods per axis and on both ends of the rods
+- This creates a paralellogram of two rod assemblies with a <u>Pin Swivel Arm<u> at each end
 
-Initial project will be aimed at getting an proof of concept 3D printer platform established.
+Parts for the assembly:
+(6) 300mm x 6.4mm round aluminum rod
+(6) printed <u>Pin Swivel Arm</u>
+(36) 7.8mm x 3.6mm round steel bicycle chain pins
+
 
 
 ================================================================================
