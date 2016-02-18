@@ -6,33 +6,33 @@
 // Kitchissippi Delta 3D Printer - Prototype
 //
 // Written by bcantin@kitchissippi-robotics.com
-// Copyright (c) 2015 Kitchissippi Robotics
+// Copyright (c) 2014-2016 Kitchissippi Robotics
 // ---------------------------------------------------------------------------------------------------------------------
-// dimensions.scad
+// LinearCarriage_Render.scad
+// Does not generate any parts, used for OpenSCAD visual rendering of assembly
 // *********************************************************************************************************************
 
-// Set this to true if using Metric hardware instead of SAE
-// NOTE - this functionality is incomplete, SAE is design default
+// Enable multipart mode - this disables built in support material and automatic rendering of the parts
+MultiPartMode = true;
 
-HARDWARE_METRIC = false;
+// Set the rendering colour design
 
-// Nuts and Bolts - Adjustable for SAE (default) or Metric
-// TODO: Add dimensions for metric
+colourPrimary = "Black";
+colourSecondary = "Lime";
 
-hwNutRadius = HARDWARE_METRIC ? 0 : 4.8;
-hwWasherRadius = HARDWARE_METRIC ? 0 : 6;
-hwBoltRadius = HARDWARE_METRIC ? 2.3 : 2.4;
+// Inner Carriage
 
-// 608zz Bearing Dimensions
+include <LinearCarriage_Inner.scad>
 
-hw608InnerRingRadius = 6;
-hw608BoreRadius = 4.1;
+color(colourPrimary)
+translate([0,0,15])
+mirror([0,0,1])
+Part_LC_Inner();
 
-// Render Settings
+// Outer Carriage
 
-RENDER_RESOLUTION = 50;
+include <LinearCarriage_Outer.scad>
 
-// Carriage Settings
-
-rpLC_Carriage_HorizontalPostSpacing = 45;	// 45 from SketchUp Design
-rpLC_Carriage_VerticalPostSpacing = 30;		// 29 from SketchUp Design
+color(colourSecondary)
+translate([0,0,-15])
+Part_LC_Outer();

@@ -1,7 +1,9 @@
 #Kitchissippi Delta 03.12
 
 The Kitchissippi Delta is a prototype delta style 3D printer.<br>
-It is designed as a RepRap styled printer that uses many easily available parts.
+It is designed as a RepRap styled printer that uses many easily available parts.<br>
+Rather than using slotted aluminum extrusion, the frame and linear guides are formed around steel and aluminum square tubing.<br>
+The vertical linear guides also form the frame and made with 3/4" square tubing that has been sanded and polished smooth.
 
 The early versions have proven that the concept works well, however it requires refinement.<br>
 Home Page: [Kitchissippi Robotics](https://kitchissippi-robotics.com/3d-printers/kitchissippi-delta/)
