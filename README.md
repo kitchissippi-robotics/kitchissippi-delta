@@ -1,9 +1,9 @@
 #Kitchissippi Delta 03.12
 
-The Kitchissippi Delta is a prototype delta style 3D printer.
+The Kitchissippi Delta is a prototype delta style 3D printer.<br>
 It is designed as a RepRap styled printer that uses many easily available parts.
 
-The early versions have proven that the concept works well, however it requires refinement.
+The early versions have proven that the concept works well, however it requires refinement.<br>
 Home Page: [Kitchissippi Robotics](https://kitchissippi-robotics.com/3d-printers/kitchissippi-delta/)
 
 ##Version Notes
@@ -51,15 +51,15 @@ v3.12 - Working on new OpenSCAD design, based on some of the work done with the 
 
 ###Calibration:
 
-- Initial build will not have consideration for auto-levelling.
+- Initial build will not have consideration for auto-levelling.<br>
   Once the base design has matured from an initial testing prototype to a working proof consideration can be applied to such advanced topics.
 
 ###Assembly Notes:
 
-- The universal joint arms may split if you try to force them onto the carriage arms.
-  I recommend printing them in PLA and then dipping them in hot water for 10 seconds to soften the plastic before carefully pushing them over the rods for a dry-run fitting.
-  Let them cool on the rod before removing them to dry them off so that you retain the internal shape.
+- The universal joint arms may split if you try to force them onto the carriage arms.<br>
+  I recommend printing them in PLA and then dipping them in hot water for 10 seconds to soften the plastic before carefully pushing them over the rods for a dry-run fitting.<br>
+  Let them cool on the rod before removing them to dry them off so that you retain the internal shape.<br>
 
-- The universal joint has some play to it it's movement, this has mostly been eliminated in current prototypes.
-  There is provision for spring attachments between the effector arm pairs on each side, like on the 3DR - this should help keep everything tight
-  Apply thick grease to the pin holders on the carriages.
+- The universal joint has some play to it it's movement, this has mostly been eliminated in current prototypes.<br>
+  There is provision for spring attachments between the effector arm pairs on each side, like on the 3DR - this should help keep everything tight<br>
+  Apply thick grease to the pin holders on the carriages.<br>
