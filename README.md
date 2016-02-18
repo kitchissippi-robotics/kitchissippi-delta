@@ -1,16 +1,16 @@
-Kitchissippi-03.11
+#Kitchissippi Delta 03.12
 ================================================================================
 
-The Kitchissippi K03 is a prototype delta style 3D printer.
-It is designed as a RepRap type printer that uses many easily available parts.
+The Kitchissippi Delta is a prototype delta style 3D printer.
+It is designed as a RepRap styled printer that uses many easily available parts.
 
 The early versions have proven that the concept works well, however it requires refinement.
-Home Page: https://www.kitchissippi-robotics.com/
+Home Page: https://kitchissippi-robotics.com/3d-printers/kitchissippi-delta/
 
 Version Notes
 --------------------------------------------------------------------------------
 
-v3.11 introduces OpenSCAD scripted parts in the effector portion to allow for easy customization and revision.
+v3.12 introduces OpenSCAD scripted parts in the effector portion to allow for easy customization and revision.
 
 <b>Pin Swivels</b>
 
