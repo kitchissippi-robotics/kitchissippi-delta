@@ -14,7 +14,9 @@ v3.2 - OpenSCAD Based design start, largely inspired by the Kitchissippi Robotic
 This 3D printer is born out of a philosophy that encompasses many points:
 
 1. As much of the machine should be made out of 3D printed plastic items as is reasonably possible, and these parts should fit within the print area of a Prusa Mendel i2.
-   Frame joining pieces, effector, linear carriages, etc. - the parts that make this machine fit together and be an FFM printer are all plastic and smaller than 200mm x 200m x 100mm. Some parts may not fit within the restrictions of PrintrBot or Huxley models, but this has not been verified nor is it a focus. (Sorry)
+   * Frame joining pieces, effector, linear carriages, etc. 
+   * The parts that make this machine fit together and be an FFM printer are all plastic and smaller than 200mm x 200m x 100mm. 
+   * Some parts may not fit within the restrictions of PrintrBot or Huxley models, but this has not been verified nor is it a focus. (Sorry)
 
 2. As much of the hardware which cannot be 3D printed should be commonly available at North American hardware store chains.
   * Frame is made from 3/4" steel and aluminum square tubing stocked by most large chain stores
