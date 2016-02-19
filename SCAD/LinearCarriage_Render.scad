@@ -12,6 +12,10 @@
 // Does not generate any parts, used for OpenSCAD visual rendering of assembly
 // *********************************************************************************************************************
 
+include <OpenSCAD-Hardware/Hardware.scad>
+Hardware_Initialize();
+
+
 // Enable multipart mode - this disables built in support material and automatic rendering of the parts
 MultiPartMode = true;
 

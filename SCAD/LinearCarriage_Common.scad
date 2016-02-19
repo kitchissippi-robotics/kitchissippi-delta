@@ -12,6 +12,7 @@
 // Does not generate a part, just common functions used within the LinearCarriage component
 // *********************************************************************************************************************
 
+include <OpenSCAD-Hardware\Hardware.scad>
 include <LinearCarriage_Common.scad>
 
 // ---------------------------------------------------------------------------------------------------------------------

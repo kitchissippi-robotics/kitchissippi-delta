@@ -17,7 +17,7 @@ include <LinearCarriage_Common.scad>
 // Determine if MultiPartMode is enabled - if not, render the part automatically
 // and enable support material (if it is defined)
 
-if (MultiPartMode == undef) {
+if (undef == MultiPartMode) {
 	MultiPartMode = false;
 	EnableSupport = true;
 

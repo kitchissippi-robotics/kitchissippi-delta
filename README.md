@@ -23,6 +23,7 @@ This 3D printer is born out of a philosophy that encompasses many points:
   * Parallelogram rods are made from round aluminum rods stocked by most large chain stores
   * Core design uses SAE hardware as much as possible, the primary exceptions being NEMA17 bolts as the motor format is metric by nature - I'm not going to re-drill and re-thread my motors and neither should you.
   * Build platform uses 1' x 1' mirror tile
+  * While the unholy mix of metric and SAE that makes up this printer might be considered strange, it's based on availability of parts on the continent it was designed on - see point 6 if you're elsewhere.
 
 3. If possible, recycled parts from commonly found machinery should be used.
   * The belt drive uses 608zz bearings for the idlers. These can be found in unused skateboards or rollerblades, or easily available from sporting goods stores that sell such items.
