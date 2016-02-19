@@ -14,16 +14,16 @@ v3.2 - OpenSCAD Based design start, largely inspired by the Kitchissippi Robotic
 This 3D printer is born out of a philosophy that encompasses many points:
 
 1. As much of the machine should be made out of 3D printed plastic items as is reasonably possible, and these parts should fit within the print area of a Prusa Mendel i2.
-..* Frame joining pieces, effector, linear carriages, etc. - the parts that make this machine fit together and be an FFM printer are all plastic and smaller than 200mm x 200m x 100mm. Some parts may not fit within the restrictions of PrintrBot or Huxley models, but this has not been verified nor is it a focus. (Sorry)
+⋅⋅* Frame joining pieces, effector, linear carriages, etc. - the parts that make this machine fit together and be an FFM printer are all plastic and smaller than 200mm x 200m x 100mm. Some parts may not fit within the restrictions of PrintrBot or Huxley models, but this has not been verified nor is it a focus. (Sorry)
 
 2. As much of the hardware which cannot be 3D printed should be commonly available at North American hardware store chains.
-..* Frame is made from 3/4" steel and aluminum square tubing stocked by most large chain stores
-..* Parallelogram rods are made from round aluminum rods stocked by most large chain stores
-..* Core design uses SAE hardware as much as possible, the primary exceptions being NEMA17 bolts as the motor format is metric by nature - I'm not going to re-drill and re-thread my motors and neither should you.
-..* Build platform uses 1' x 1' mirror tile
+⋅⋅* Frame is made from 3/4" steel and aluminum square tubing stocked by most large chain stores
+⋅⋅* Parallelogram rods are made from round aluminum rods stocked by most large chain stores
+⋅⋅* Core design uses SAE hardware as much as possible, the primary exceptions being NEMA17 bolts as the motor format is metric by nature - I'm not going to re-drill and re-thread my motors and neither should you.
+⋅⋅* Build platform uses 1' x 1' mirror tile
 
 3. If possible, recycled parts from commonly found machinery should be used.
-..* The belt drive uses 608zz bearings for the idlers. These can be found in unused skateboards or rollerblades, or easily available from sporting goods stores that sell such items.
+⋅⋅* The belt drive uses 608zz bearings for the idlers. These can be found in unused skateboards or rollerblades, or easily available from sporting goods stores that sell such items.
 ..* All joints use bicycle chain pins - these are hardened steel pins and can be extracted with an inexpensive tool from old chains or even sourced from new chains which are quite inexpensive.
 
 4. Use standard RepRap electronics where possible.
