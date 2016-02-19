@@ -11,10 +11,7 @@
 // dimensions.scad
 // *********************************************************************************************************************
 
-// Set this to true if using Metric hardware instead of SAE
-// NOTE - this functionality is incomplete, SAE is design default
-
-HARDWARE_METRIC = false;
+include <Configuration.scad>
 
 // Nuts and Bolts - Adjustable for SAE (default) or Metric
 // TODO: Add dimensions for metric

@@ -12,11 +12,30 @@
 // Does not generate any parts, used for OpenSCAD visual rendering of assembly
 // *********************************************************************************************************************
 
+// ---------------------------------------------------------------------------------------------------------------------
+// Include and Configure the Hardware Library
+// .....................................................................................................................
+
 include <OpenSCAD-Hardware/Hardware.scad>
-Hardware_Initialize();
+include <Configuration.scad>
 
+echo(str("  $fn = ", $fn));
+echo(str("  gBaseFN = ", gBaseFN));
+echo(str("  gRender_Quality = ", gRender_Quality));
 
-// Enable multipart mode - this disables built in support material and automatic rendering of the parts
+Hardware_Initialize(NOZZLE_SIZE, gRender_ProductionQuality);
+$fn = gBaseFN;
+
+echo(str("  $fn = ", $fn));
+echo(str("  gBaseFN = ", gBaseFN));
+echo(str("  gRender_Quality = ", gRender_Quality));
+echo(str("  gNozzleSize = ", gNozzleSize));
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Enable multipart mode
+// .....................................................................................................................
+// This disables built in support material and automatic rendering of the parts
+
 MultiPartMode = true;
 
 // Set the rendering colour design
