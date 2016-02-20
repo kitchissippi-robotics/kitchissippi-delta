@@ -25,11 +25,24 @@ hwBoltRadius = HARDWARE_METRIC ? 2.3 : 2.4;
 hw608InnerRingRadius = 6;
 hw608BoreRadius = 4.1;
 
-// Render Settings
-
-RENDER_RESOLUTION = 50;
-
 // Carriage Settings
 
 rpLC_Carriage_HorizontalPostSpacing = 45;	// 45 from SketchUp Design
 rpLC_Carriage_VerticalPostSpacing = 30;		// 29 from SketchUp Design
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Pin - Bicycle chain pins extracted from chain for 5~6-speed cassette
+// .....................................................................................................................
+
+// Edit these if your pins are a different size
+
+hwPin_Diameter = 3.6;	// bicycle chain pin diameter (in mm)
+hwPin_Length = 7.8;	// bicycle chain pin length (in mm)
+
+
+
+rpArm_Spacing = 50;		// space between the rods on the same plane (in mm)
+rpArm_PinSeparation = 1;	// space between the two vertical pins (in mm)
+rpArm_PinDepth	= 5;		// how far the stationary pins should be embedded (in mm)
+
+rpSwivelArmHeight = rpArm_PinDepth * 2 + rpArm_PinSeparation;

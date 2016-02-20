@@ -14,9 +14,11 @@
 
 // Set this to true if using Metric hardware instead of SAE
 // NOTE - this functionality is incomplete, SAE is design default
+// Ultimated the Kitchissippi-Delta is a mix of hardware types
 
 HARDWARE_METRIC = false;
 
 //
 
 NOZZLE_SIZE = 0.5;
+RENDER_LEVEL = 1;

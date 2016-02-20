@@ -16,20 +16,8 @@
 // Include and Configure the Hardware Library
 // .....................................................................................................................
 
-include <OpenSCAD-Hardware/Hardware.scad>
+include <OpenSCAD-Hardware/HardwareLib.scad>
 include <Configuration.scad>
-
-echo(str("  $fn = ", $fn));
-echo(str("  gBaseFN = ", gBaseFN));
-echo(str("  gRender_Quality = ", gRender_Quality));
-
-Hardware_Initialize(NOZZLE_SIZE, gRender_ProductionQuality);
-$fn = gBaseFN;
-
-echo(str("  $fn = ", $fn));
-echo(str("  gBaseFN = ", gBaseFN));
-echo(str("  gRender_Quality = ", gRender_Quality));
-echo(str("  gNozzleSize = ", gNozzleSize));
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Enable multipart mode
