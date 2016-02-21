@@ -48,13 +48,7 @@ module Part_CarriageAdapter() {
 	difference() {
 		// main shape
 		union() {
-			hull() {
-				translate([-rpCarriageAdapter_MountSpacing /2,0, 0])
-					cylinder(h = rpCarriageAdapter_BaseBoltThickness, d = 10, $fn = gcFacetMedium);
-
-				translate([rpCarriageAdapter_MountSpacing /2,0, 0])
-					cylinder(h = rpCarriageAdapter_BaseBoltThickness, d = 10, $fn = gcFacetMedium);
-			}
+			CarriageAdapter_Base();
 
 			hull() {
 				// washer base
@@ -82,7 +76,52 @@ module Part_CarriageAdapter() {
 	}
 }
 
+module CarriageAdapter_Base() {
+	difference() {
+		hull() {
+			// bolt bases
+			translate([-rpCarriageAdapter_MountSpacing /2,0, 0])
+				cylinder(h = rpCarriageAdapter_BaseBoltThickness, d = 10, $fn = gcFacetMedium);
 
+			translate([rpCarriageAdapter_MountSpacing /2,0, 0])
+				cylinder(h = rpCarriageAdapter_BaseBoltThickness, d = 10, $fn = gcFacetMedium);
+
+			// four corners
+			translate([rpCarriageAdapter_BaseWidth /2, rpCarriageAdapter_BaseLength /2, 0])
+				cylinder(h = rpCarriageAdapter_BaseThickness, d = 4, $fn = gcFacetSmall);
+
+			translate([rpCarriageAdapter_BaseWidth /2, -rpCarriageAdapter_BaseLength /2, 0])
+				cylinder(h = rpCarriageAdapter_BaseThickness, d = 4, $fn = gcFacetSmall);
+
+			translate([-rpCarriageAdapter_BaseWidth /2, rpCarriageAdapter_BaseLength /2, 0])
+				cylinder(h = rpCarriageAdapter_BaseThickness, d = 4, $fn = gcFacetSmall);
+
+			translate([-rpCarriageAdapter_BaseWidth /2, -rpCarriageAdapter_BaseLength /2, 0])
+				cylinder(h = rpCarriageAdapter_BaseThickness, d = 4, $fn = gcFacetSmall);
+		}
+
+		// carve out belt path
+		beltPathSize = 2;
+
+		hull() {
+			translate([rpCarriageAdapter_BeltPathOffset + rpCarriageAdapter_BeltPathWidth - beltPathSize, rpCarriageAdapter_BaseLength /2 + 8, rpCarriageAdapter_BaseThickness])
+			rotate([90,0,0])
+				cylinder(h = rpCarriageAdapter_BaseLength + 16, d = beltPathSize, $fn = gcFacetSmall);
+
+			translate([rpCarriageAdapter_BeltPathOffset + rpCarriageAdapter_BeltPathWidth - beltPathSize, rpCarriageAdapter_BaseLength /2 + 8, 10])
+			rotate([90,0,0])
+				cylinder(h = rpCarriageAdapter_BaseLength + 16, d = beltPathSize, $fn = gcFacetSmall);
+
+			translate([-rpCarriageAdapter_BeltPathOffset - rpCarriageAdapter_BeltPathWidth + beltPathSize, rpCarriageAdapter_BaseLength /2 + 8, rpCarriageAdapter_BaseThickness])
+			rotate([90,0,0])
+				cylinder(h = rpCarriageAdapter_BaseLength + 16, d = beltPathSize, $fn = gcFacetSmall);
+
+			translate([-rpCarriageAdapter_BeltPathOffset - rpCarriageAdapter_BeltPathWidth + beltPathSize, rpCarriageAdapter_BaseLength /2 + 8, 10])
+			rotate([90,0,0])
+				cylinder(h = rpCarriageAdapter_BaseLength + 16, d = beltPathSize, $fn = gcFacetSmall);
+		}
+	}
+}
 
 module Hardware_CarriageAdapter() {
 	// mounting bolts
@@ -105,5 +144,5 @@ module Hardware_CarriageAdapter() {
 	// adjuster washer
 	translate([0, -rpCarriageAdapter_AdjustmentWasherOffset, rpCarriageAdapter_AdjustmentBoltOffset])
 	rotate([90,0,0])
-		%cylinder(h = 1, d = 11.5);
+		%cylinder(h = 1, d = 11.5, $fn = gcFacetMedium);
 }

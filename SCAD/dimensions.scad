@@ -53,4 +53,9 @@ rpCarriageAdapter_AdjustmentBoltOffset = 2.5;	// 2.5; vertical offset of the adj
 rpCarriageAdapter_SwivelOffset = 19; 	// 19; Offset of swivel from the base
 rpCarriageAdapter_BaseBoltThickness = 5;
 rpCarriageAdapter_BaseThickness = 2;
+rpCarriageAdapter_BaseLength = 36;
+rpCarriageAdapter_BaseWidth = 31;
 rpCarriageAdapter_AdjustmentWasherOffset = 22.5;
+
+rpCarriageAdapter_BeltPathWidth = 8.9;
+rpCarriageAdapter_BeltPathOffset = 8.9;
