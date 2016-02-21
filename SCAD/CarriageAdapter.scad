@@ -22,7 +22,7 @@ MultiPartMode = false;
 // Determine if MultiPartMode is enabled - if not, render the part automatically
 // and enable support material (if it is defined)
 
-%translate([0,-1, 0])
+*translate([0,-1, 0])
 import("../YellowCarriage.stl", convexity=3);
 
 if (undef == MultiPartMode || MultiPartMode == false) {
@@ -33,7 +33,7 @@ if (undef == MultiPartMode || MultiPartMode == false) {
 	Hardware_CarriageAdapter();
 
 	// test render the swivel arm
-	translate([0, -rpArm_PinDepth -rpArm_PinSeparation/2, rpCarriageAdapter_SwivelOffset])
+	%translate([0, -rpArm_PinDepth -rpArm_PinSeparation/2, rpCarriageAdapter_SwivelOffset])
 	rotate([-90,0,0])
 	{
 		Part_Pin_Swivel_Arm();
@@ -59,16 +59,43 @@ module Part_CarriageAdapter() {
 				// adjuster nut base
 				translate([0, -rpCarriageAdapter_AdjustmentNutOffset + 0.5, rpCarriageAdapter_AdjustmentBoltOffset])
 				rotate([90,90,0])
-					cylinder(h = 5, d = 14, $fn = 6);
+					cylinder(h = 5, d = 15, $fn = 6);
 
 				// adjuster bolt cover
-				translate([0, 20, rpCarriageAdapter_AdjustmentBoltOffset])
+				translate([0, -12, rpCarriageAdapter_AdjustmentBoltOffset])
 				rotate([90,90,0])
-					cylinder(h = 20, d = 8, $fn = gcFacetMedium);
+					cylinder(h = 2, d = 8, $fn = gcFacetMedium);
+			}
+
+			hull() {
+				// adjuster bolt cover
+				translate([0, 12.5, rpCarriageAdapter_AdjustmentBoltOffset])
+				rotate([90,90,0])
+					cylinder(h = 25, d = 8, $fn = gcFacetMedium);
+
+				// adjuster bolt cover
+				translate([0, 14, 2])
+				rotate([90,90,0])
+					cylinder(h = 30, d = 8, $fn = gcFacetMedium);
+
+				// adjuster bolt cover
+				translate([0, 16, 2])
+				rotate([90,90,0])
+					cylinder(h = 30, d = 6, $fn = gcFacetMedium);
+
+				// adjuster bolt cover
+				translate([0, 20, 0])
+				rotate([90,90,0])
+					cylinder(h = 30, d = 2, $fn = gcFacetMedium);
 			}
 		}
 
 		// carve outs
+
+		// adjuster nut
+		translate([0, -rpCarriageAdapter_AdjustmentNutOffset - 0, rpCarriageAdapter_AdjustmentBoltOffset])
+		rotate([90,90,0])
+			cylinder(h = 4, d = 11, $fn = 6);
 
 		// base block carveout
 		translate([-50, -50, -20])
@@ -100,26 +127,34 @@ module CarriageAdapter_Base() {
 				cylinder(h = rpCarriageAdapter_BaseThickness, d = 4, $fn = gcFacetSmall);
 		}
 
-		// carve out belt path
-		beltPathSize = 2;
+		CarriageAdapter_BeltPathCarveout();
+		mirror([1,0,0])
+			CarriageAdapter_BeltPathCarveout();
 
-		hull() {
-			translate([rpCarriageAdapter_BeltPathOffset + rpCarriageAdapter_BeltPathWidth - beltPathSize, rpCarriageAdapter_BaseLength /2 + 8, rpCarriageAdapter_BaseThickness])
-			rotate([90,0,0])
-				cylinder(h = rpCarriageAdapter_BaseLength + 16, d = beltPathSize, $fn = gcFacetSmall);
+	}
+}
 
-			translate([rpCarriageAdapter_BeltPathOffset + rpCarriageAdapter_BeltPathWidth - beltPathSize, rpCarriageAdapter_BaseLength /2 + 8, 10])
-			rotate([90,0,0])
-				cylinder(h = rpCarriageAdapter_BaseLength + 16, d = beltPathSize, $fn = gcFacetSmall);
+module CarriageAdapter_BeltPathCarveout() {
+	// carve out belt path
+	beltPathSize = 3;
 
-			translate([-rpCarriageAdapter_BeltPathOffset - rpCarriageAdapter_BeltPathWidth + beltPathSize, rpCarriageAdapter_BaseLength /2 + 8, rpCarriageAdapter_BaseThickness])
-			rotate([90,0,0])
-				cylinder(h = rpCarriageAdapter_BaseLength + 16, d = beltPathSize, $fn = gcFacetSmall);
+	hull() {
+		translate([rpCarriageAdapter_BeltPathOffset + rpCarriageAdapter_BeltPathWidth/2 - beltPathSize /2, rpCarriageAdapter_BaseLength /2 + 8, rpCarriageAdapter_BaseThickness + beltPathSize /2])
+		rotate([90,0,0])
+			cylinder(h = rpCarriageAdapter_BaseLength + 16, d = beltPathSize, $fn = gcFacetSmall);
 
-			translate([-rpCarriageAdapter_BeltPathOffset - rpCarriageAdapter_BeltPathWidth + beltPathSize, rpCarriageAdapter_BaseLength /2 + 8, 10])
-			rotate([90,0,0])
-				cylinder(h = rpCarriageAdapter_BaseLength + 16, d = beltPathSize, $fn = gcFacetSmall);
-		}
+		translate([0, rpCarriageAdapter_BaseLength /2 + 8, 10])
+		rotate([90,0,0])
+			cylinder(h = rpCarriageAdapter_BaseLength + 16, d = beltPathSize, $fn = gcFacetSmall);
+
+		translate([rpCarriageAdapter_BeltPathOffset - rpCarriageAdapter_BeltPathWidth/2 + beltPathSize /2, rpCarriageAdapter_BaseLength /2 + 8, rpCarriageAdapter_BaseThickness + beltPathSize /2])
+		rotate([90,0,0])
+			cylinder(h = rpCarriageAdapter_BaseLength + 16, d = beltPathSize, $fn = gcFacetSmall);
+
+		translate([rpCarriageAdapter_BeltPathOffset + rpCarriageAdapter_BeltPathWidth - beltPathSize *2, rpCarriageAdapter_BaseLength /2 + 8, 10])
+		rotate([90,0,0])
+			cylinder(h = rpCarriageAdapter_BaseLength + 16, d = beltPathSize, $fn = gcFacetSmall);
+
 	}
 }
 
