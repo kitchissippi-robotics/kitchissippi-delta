@@ -43,6 +43,6 @@ hwPin_Length = 7.8;	// bicycle chain pin length (in mm)
 
 rpArm_Spacing = 50;		// space between the rods on the same plane (in mm)
 rpArm_PinSeparation = 1;	// space between the two vertical pins (in mm)
-rpArm_PinDepth	= 5;		// how far the stationary pins should be embedded (in mm)
+rpArm_PinDepth	= 5.2;		// how far the stationary pins should be embedded (in mm)
 
 rpSwivelArmHeight = rpArm_PinDepth * 2 + rpArm_PinSeparation;
