@@ -14,8 +14,8 @@ v3.2 - OpenSCAD Based design start, largely inspired by the Kitchissippi Robotic
 This 3D printer is born out of a philosophy that encompasses many points:
 
 1. As much of the machine should be made out of 3D printed plastic items as is reasonably possible, and these parts should fit within the print area of a Prusa Mendel i2.
-   * Frame joining pieces, effector, linear carriages, etc. 
-   * The parts that make this machine fit together and be an FFM printer are all plastic and smaller than 200mm x 200m x 100mm. 
+   * Frame joining pieces, effector, linear carriages, etc.
+   * The parts that make this machine fit together and be an FFM printer are all plastic and smaller than 200mm x 200m x 100mm.
    * Some parts may not fit within the restrictions of PrintrBot or Huxley models, but this has not been verified nor is it a focus. (Sorry)
 
 2. As much of the hardware which cannot be 3D printed should be commonly available at North American hardware store chains.
@@ -63,7 +63,7 @@ This 3D printer is born out of a philosophy that encompasses many points:
 ###Drive System:
 
 - GT2 timing belt driven on machined aluminum GT2-20 pulleys with 608zz bearing idlers.
-- Linear motion achieved on 1/4" polished steel tubing, with 608zz carriage sytem based on the K-02 prototype carriage concept.
+- Linear motion achieved on 3/4" hand sanded and polished steel tubing, with 608zz carriage sytem based on the K-02 prototype carriage concept.
 - Consideration was given to spectra-line drive systems, however the relative cost of GT2 belt and the extra effort required seems economically unsound.
 - Standard NEMA17 stepper motors.
 
@@ -72,8 +72,9 @@ This 3D printer is born out of a philosophy that encompasses many points:
 - 1.75mm filament driven through 2mm ID / 4mm OD PTFE tubing.
 - Carriage and mounts are based around the current J Head design with no consideration for other groovemounted hotends at this time - it will be made more modular in the future
 - Fan shrouding is designed for the needs of a J Head running at elevated temperatures, there is a 25mm x 10mm fan aimed at the cooling fins in the PEEK/cold-end portion of the design - always on.
-- Ducting may be beneficial to other similar hotends, however I would not recommend using the Carriage - Core piece with an all-metal hotend unless it has been printed in a high temperature plastic, such as ABS or Nylon
+- Ducting may be beneficial to other similar hotends, however I would not recommend using the Effector - Core piece with an all-metal hotend unless it has been printed in a high temperature plastic, such as ABS or Nylon
 - Dual 25mm x 10mm fans ducted around the hotend towards the print immediately below the carriage for plastics that need active cooling - software controlled.
+- The above description of the effector unit will be completely revised in v3.2 with the aim of cooling only the hotend fins, the dual 25mm print cooling fans provided negligible benefits
 
 ###Movement:
 
