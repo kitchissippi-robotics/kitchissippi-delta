@@ -49,4 +49,8 @@ rpSwivelArmHeight = rpArm_PinDepth * 2 + rpArm_PinSeparation;
 
 rpCarriageAdapter_MountSpacing = 39;	// 39;	spacing between bolts to mount to the linear carriage
 rpCarriageAdapter_AdjustmentNutOffset = 15;	// 15.1; vertical offset from center line for the adjustment nut
+rpCarriageAdapter_AdjustmentBoltOffset = 2.5;	// 2.5; vertical offset of the adjustment bolt
 rpCarriageAdapter_SwivelOffset = 19; 	// 19; Offset of swivel from the base
+rpCarriageAdapter_BaseBoltThickness = 5;
+rpCarriageAdapter_BaseThickness = 2;
+rpCarriageAdapter_AdjustmentWasherOffset = 22.5;
