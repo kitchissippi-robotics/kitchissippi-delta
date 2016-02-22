@@ -92,8 +92,19 @@ module Part_CarriageAdapter() {
 					sphere(d = 6, $fn = gcFacetSmall);
 			}
 			
+			translate([-rpCarriageAdapter_BeltPathOffset -1,8,0])
+			CarriageBase_BeltClamp(12);
+			
+			translate([-rpCarriageAdapter_BeltPathOffset -1,-20,0])
+			CarriageBase_BeltClamp(12);
 			//CarriageAdapter_SwivelArm();
 		}
+		
+		translate([-rpCarriageAdapter_BeltPathOffset -1,8,0])
+			CarriageBase_BeltCarveOut(12);
+			
+				translate([-rpCarriageAdapter_BeltPathOffset -1,-20,0])
+			CarriageBase_BeltCarveOut(12);
 
 		// carve outs
 		
@@ -102,10 +113,30 @@ module Part_CarriageAdapter() {
 		rotate([0,90,0])
 			cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
 			
+		// Right horizontal pin mounting slot
+		hull() {
+		translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation , 0, rpCarriageAdapter_SwivelOffset +6])
+		rotate([0,105,0])
+			cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
+		translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation -1, 0, rpCarriageAdapter_SwivelOffset + 2])
+		rotate([0,105,0])
+			cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
+		}
+			
 		// Left horizontal pin
 		translate([rpArm_Spacing /2 - hwPin_Diameter /2 - rpArm_PinSeparation, 0, rpCarriageAdapter_SwivelOffset])
 		rotate([0,-90,0])
 			cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
+			
+		// left horizontal pin mounting slot
+		mirror([1,0,0]) hull() {
+		translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation , 0, rpCarriageAdapter_SwivelOffset +6])
+		rotate([0,105,0])
+			cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
+		translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation -1, 0, rpCarriageAdapter_SwivelOffset + 2])
+		rotate([0,105,0])
+			cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
+		}
 		
 		// adjuster bolt
 		translate([0, 0, rpCarriageAdapter_AdjustmentBoltOffset])
@@ -153,16 +184,52 @@ module Part_CarriageAdapter() {
 	}
 }
 
+module CarriageBase_BeltCarveOut(length) {
+	height = 10.1 - rpCarriageAdapter_BaseThickness;
+		translate([1, -0.1, rpCarriageAdapter_BaseThickness])
+			cube([1, length + 0.2, height]);
+			
+		translate([-2, -0.1, rpCarriageAdapter_BaseThickness])
+			cube([1, length + 0.2, height]);
+		
+		for (i = [0 : 2 : length]) {
+			translate([2, i, rpCarriageAdapter_BaseThickness])
+			scale([2,1,1])
+			cylinder(h = height, d = 1, $fn = gcFacetSmall);
+			
+			translate([-2, i, rpCarriageAdapter_BaseThickness])
+			scale([2,1,1])
+			cylinder(h = height, d = 1, $fn = gcFacetSmall);
+		}
+}
+
+module CarriageBase_BeltClamp(length) {
+		hull() {
+			translate([rpCarriageAdapter_BeltPathWidth/2, length -1, 0])
+				cylinder( h = 10, d = 2, $fn = gcFacetSmall);
+			
+			translate([-rpCarriageAdapter_BeltPathWidth/2, length -1, 0])
+				cylinder( h = 10, d = 2, $fn = gcFacetSmall);
+			
+			translate([rpCarriageAdapter_BeltPathWidth/2, 1, 0])
+				cylinder( h = 10, d = 2, $fn = gcFacetSmall);
+			
+			translate([-rpCarriageAdapter_BeltPathWidth/2, 1, 0])
+				cylinder( h = 10, d = 2, $fn = gcFacetSmall);
+		}
+	
+}
+
 module CarriageAdapter_Base() {
 	difference() {
 		union() {
 			hull() {
 				// bolt bases
 				translate([-rpCarriageAdapter_MountSpacing /2,0, 0])
-					cylinder(h = rpCarriageAdapter_BaseBoltThickness, d = 10, $fn = gcFacetMedium);
+					cylinder(h = rpCarriageAdapter_BaseBoltThickness, d = 8, $fn = gcFacetMedium);
 
 				translate([rpCarriageAdapter_MountSpacing /2,0, 0])
-					cylinder(h = rpCarriageAdapter_BaseBoltThickness, d = 10, $fn = gcFacetMedium);
+					cylinder(h = rpCarriageAdapter_BaseBoltThickness, d = 8, $fn = gcFacetMedium);
 
 				// four corners
 				translate([rpCarriageAdapter_BaseWidth /2, rpCarriageAdapter_BaseLength /2, 0])
@@ -214,7 +281,7 @@ module CarriageAdapter_SwivelArm() {
 			
 		translate([rpCarriageAdapter_BaseWidth /2 -2, 0, rpCarriageAdapter_SwivelOffset])
 			rotate([90, 0, 90])
-			cylinder(h = 2, d = 10, $fn = gcFacetMedium);
+			cylinder(h = 2, d = 6, $fn = gcFacetMedium);
 			
 		
 			
