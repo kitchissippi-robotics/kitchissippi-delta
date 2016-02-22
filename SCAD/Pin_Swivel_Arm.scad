@@ -18,6 +18,7 @@ include <OpenSCAD-Hardware/HardwareLib.scad>
 // Determine if MultiPartMode is enabled - if not, render the part automatically
 // and enable support material (if it is defined)
 
+
 if (undef == MultiPartMode) {
 	MultiPartMode = false;
 	EnableSupport = true;

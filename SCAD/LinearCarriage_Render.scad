@@ -35,7 +35,7 @@ colourSecondary = "Lime";
 
 include <LinearCarriage_Inner.scad>
 
-color(colourPrimary)
+//color(colourPrimary)
 translate([0,0,15])
 mirror([0,0,1])
 Part_LC_Inner();
@@ -44,6 +44,14 @@ Part_LC_Inner();
 
 include <LinearCarriage_Outer.scad>
 
-color(colourSecondary)
+//color(colourSecondary)
 translate([0,0,-15])
 Part_LC_Outer();
+
+// Carriage Adapter
+
+include <CarriageAdapter.scad>
+
+//color(colourSecondary)
+translate([0,0,15])
+Part_CarriageAdapter();

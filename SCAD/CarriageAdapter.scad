@@ -15,9 +15,8 @@ include <Configuration.scad>
 include <Dimensions.scad>
 include <OpenSCAD-Hardware/HardwareLib.scad>
 
-MultiPartMode = true;
-include <Pin_Swivel_Arm.scad>
 MultiPartMode = false;
+include <Pin_Swivel_Arm.scad>
 
 // Determine if MultiPartMode is enabled - if not, render the part automatically
 // and enable support material (if it is defined)
@@ -25,13 +24,15 @@ MultiPartMode = false;
 *translate([0,-1, 0])
 import("../YellowCarriage.stl", convexity=3);
 
-if (undef == MultiPartMode || MultiPartMode == false) {
+if (undef == MultiPartMode) {
 	MultiPartMode = false;
 	EnableSupport = true;
+}
 
+if (MultiPartMode == false) {
 	Part_CarriageAdapter();
 	Hardware_CarriageAdapter();
-
+	
 	// test render the swivel arm
 	%translate([0, -rpArm_PinDepth -rpArm_PinSeparation/2, rpCarriageAdapter_SwivelOffset])
 	rotate([-90,0,0])
@@ -39,7 +40,6 @@ if (undef == MultiPartMode || MultiPartMode == false) {
 		Part_Pin_Swivel_Arm();
 		Hardware_Pin_Swivel_Arm();
 	}
-
 } else {
 	EnableSupport = false;
 }
@@ -96,6 +96,16 @@ module Part_CarriageAdapter() {
 		}
 
 		// carve outs
+		
+		// Right horizontal pin
+		translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation, 0, rpCarriageAdapter_SwivelOffset])
+		rotate([0,90,0])
+			cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
+			
+		// Left horizontal pin
+		translate([rpArm_Spacing /2 - hwPin_Diameter /2 - rpArm_PinSeparation, 0, rpCarriageAdapter_SwivelOffset])
+		rotate([0,-90,0])
+			cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
 		
 		// adjuster bolt
 		translate([0, 0, rpCarriageAdapter_AdjustmentBoltOffset])
@@ -204,7 +214,7 @@ module CarriageAdapter_SwivelArm() {
 			
 		translate([rpCarriageAdapter_BaseWidth /2 -2, 0, rpCarriageAdapter_SwivelOffset])
 			rotate([90, 0, 90])
-			cylinder(h = 2, d = 6, $fn = gcFacetMedium);
+			cylinder(h = 2, d = 10, $fn = gcFacetMedium);
 			
 		
 			
@@ -233,7 +243,7 @@ module CarriageAdapter_BeltPathCarveout() {
 		rotate([90,0,0])
 			cylinder(h = rpCarriageAdapter_BaseLength + 16, d = beltPathSize, $fn = gcFacetSmall);
 
-		translate([rpCarriageAdapter_BeltPathOffset + rpCarriageAdapter_BeltPathWidth - beltPathSize *2, rpCarriageAdapter_BaseLength /2 + 8, 10])
+		translate([rpCarriageAdapter_BeltPathOffset + rpCarriageAdapter_BeltPathWidth - beltPathSize *2, rpCarriageAdapter_BaseLength /2 + 8, 15])
 		rotate([90,0,0])
 			cylinder(h = rpCarriageAdapter_BaseLength + 16, d = beltPathSize, $fn = gcFacetSmall);
 
