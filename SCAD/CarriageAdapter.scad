@@ -88,6 +88,8 @@ module Part_CarriageAdapter() {
 				rotate([90,90,0])
 					cylinder(h = 30, d = 2, $fn = gcFacetMedium);
 			}
+			
+			//CarriageAdapter_SwivelArm();
 		}
 
 		// carve outs
@@ -105,26 +107,32 @@ module Part_CarriageAdapter() {
 
 module CarriageAdapter_Base() {
 	difference() {
-		hull() {
-			// bolt bases
-			translate([-rpCarriageAdapter_MountSpacing /2,0, 0])
-				cylinder(h = rpCarriageAdapter_BaseBoltThickness, d = 10, $fn = gcFacetMedium);
+		union() {
+			hull() {
+				// bolt bases
+				translate([-rpCarriageAdapter_MountSpacing /2,0, 0])
+					cylinder(h = rpCarriageAdapter_BaseBoltThickness, d = 10, $fn = gcFacetMedium);
 
-			translate([rpCarriageAdapter_MountSpacing /2,0, 0])
-				cylinder(h = rpCarriageAdapter_BaseBoltThickness, d = 10, $fn = gcFacetMedium);
+				translate([rpCarriageAdapter_MountSpacing /2,0, 0])
+					cylinder(h = rpCarriageAdapter_BaseBoltThickness, d = 10, $fn = gcFacetMedium);
 
-			// four corners
-			translate([rpCarriageAdapter_BaseWidth /2, rpCarriageAdapter_BaseLength /2, 0])
-				cylinder(h = rpCarriageAdapter_BaseThickness, d = 4, $fn = gcFacetSmall);
+				// four corners
+				translate([rpCarriageAdapter_BaseWidth /2, rpCarriageAdapter_BaseLength /2, 0])
+					cylinder(h = rpCarriageAdapter_BaseThickness, d = 4, $fn = gcFacetSmall);
 
-			translate([rpCarriageAdapter_BaseWidth /2, -rpCarriageAdapter_BaseLength /2, 0])
-				cylinder(h = rpCarriageAdapter_BaseThickness, d = 4, $fn = gcFacetSmall);
+				translate([rpCarriageAdapter_BaseWidth /2, -rpCarriageAdapter_BaseLength /2, 0])
+					cylinder(h = rpCarriageAdapter_BaseThickness, d = 4, $fn = gcFacetSmall);
 
-			translate([-rpCarriageAdapter_BaseWidth /2, rpCarriageAdapter_BaseLength /2, 0])
-				cylinder(h = rpCarriageAdapter_BaseThickness, d = 4, $fn = gcFacetSmall);
+				translate([-rpCarriageAdapter_BaseWidth /2, rpCarriageAdapter_BaseLength /2, 0])
+					cylinder(h = rpCarriageAdapter_BaseThickness, d = 4, $fn = gcFacetSmall);
 
-			translate([-rpCarriageAdapter_BaseWidth /2, -rpCarriageAdapter_BaseLength /2, 0])
-				cylinder(h = rpCarriageAdapter_BaseThickness, d = 4, $fn = gcFacetSmall);
+				translate([-rpCarriageAdapter_BaseWidth /2, -rpCarriageAdapter_BaseLength /2, 0])
+					cylinder(h = rpCarriageAdapter_BaseThickness, d = 4, $fn = gcFacetSmall);
+			}
+			
+			CarriageAdapter_SwivelArm();
+			mirror([1,0,0])
+				CarriageAdapter_SwivelArm();
 		}
 
 		CarriageAdapter_BeltPathCarveout();
@@ -134,9 +142,45 @@ module CarriageAdapter_Base() {
 	}
 }
 
+module CarriageAdapter_SwivelArm() {
+	sphereSize = 6;
+	hull() {
+		translate([rpCarriageAdapter_BaseWidth /2 -1, rpCarriageAdapter_BaseLength /2 -1, 0])
+		sphere(d = sphereSize,  $fn = gcFacetSmall);
+	
+		translate([rpCarriageAdapter_BaseWidth /2 -1, -rpCarriageAdapter_BaseLength /2 +1, 0])
+		sphere(d = sphereSize,  $fn = gcFacetSmall);
+		
+		translate([rpCarriageAdapter_BaseWidth /2 -3, 0, 2])
+		rotate([90, 0, 90])
+		cylinder(h = 4, d = 10, $fn = gcFacetMedium);
+	}
+	
+	hull() {
+		translate([rpCarriageAdapter_BaseWidth /2 - 1, -rpCarriageAdapter_BaseLength /2 +1, 0])
+		sphere(d = sphereSize,  $fn = gcFacetSmall);
+	
+		translate([rpCarriageAdapter_BaseWidth /2 -3, 0, rpCarriageAdapter_SwivelOffset])
+			rotate([90, 0, 90])
+			cylinder(h = 4, d = 5, $fn = gcFacetMedium);
+			
+		translate([rpCarriageAdapter_BaseWidth /2 -2, 0, rpCarriageAdapter_SwivelOffset])
+			rotate([90, 0, 90])
+			cylinder(h = 2, d = 6, $fn = gcFacetMedium);
+			
+		
+			
+		translate([rpCarriageAdapter_BaseWidth /2 -3, 0, 2])
+		rotate([90, 0, 90])
+		cylinder(h = 4, d = 4, $fn = gcFacetMedium);
+	}
+	
+}
+
+
 module CarriageAdapter_BeltPathCarveout() {
 	// carve out belt path
-	beltPathSize = 3;
+	beltPathSize = 4;
 
 	hull() {
 		translate([rpCarriageAdapter_BeltPathOffset + rpCarriageAdapter_BeltPathWidth/2 - beltPathSize /2, rpCarriageAdapter_BaseLength /2 + 8, rpCarriageAdapter_BaseThickness + beltPathSize /2])
