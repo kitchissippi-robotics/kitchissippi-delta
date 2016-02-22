@@ -32,7 +32,7 @@ if (undef == MultiPartMode) {
 if (MultiPartMode == false) {
 	Part_CarriageAdapter();
 	Hardware_CarriageAdapter();
-	
+
 	// test render the swivel arm
 	%translate([0, -rpArm_PinDepth -rpArm_PinSeparation/2, rpCarriageAdapter_SwivelOffset])
 	rotate([-90,0,0])
@@ -43,6 +43,8 @@ if (MultiPartMode == false) {
 } else {
 	EnableSupport = false;
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
 
 module Part_CarriageAdapter() {
 	difference() {
@@ -87,32 +89,32 @@ module Part_CarriageAdapter() {
 				translate([0, 20, 0])
 				rotate([90,90,0])
 					cylinder(h = 30, d = 2, $fn = gcFacetMedium);*/
-					
+
 				translate([0, 10, 2])
 					sphere(d = 6, $fn = gcFacetSmall);
 			}
-			
+
 			translate([-rpCarriageAdapter_BeltPathOffset,8,0])
 			CarriageBase_BeltClamp(12);
-			
+
 			translate([-rpCarriageAdapter_BeltPathOffset,-20,0])
 			CarriageBase_BeltClamp(12);
 			//CarriageAdapter_SwivelArm();
 		}
-		
+
 		translate([-rpCarriageAdapter_BeltPathOffset,8,0])
 			CarriageBase_BeltCarveOut(12);
-			
+
 				translate([-rpCarriageAdapter_BeltPathOffset,-20,0])
 			CarriageBase_BeltCarveOut(12);
 
 		// carve outs
-		
+
 		// Right horizontal pin
 		translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation, 0, rpCarriageAdapter_SwivelOffset])
 		rotate([0,90,0])
 			cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
-			
+
 		// Right horizontal pin mounting slot
 		hull() {
 		translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation , 0, rpCarriageAdapter_SwivelOffset +6])
@@ -122,12 +124,12 @@ module Part_CarriageAdapter() {
 		rotate([0,105,0])
 			cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
 		}
-			
+
 		// Left horizontal pin
 		translate([rpArm_Spacing /2 - hwPin_Diameter /2 - rpArm_PinSeparation, 0, rpCarriageAdapter_SwivelOffset])
 		rotate([0,-90,0])
 			cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
-			
+
 		// left horizontal pin mounting slot
 		mirror([1,0,0]) hull() {
 		translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation , 0, rpCarriageAdapter_SwivelOffset +6])
@@ -137,27 +139,27 @@ module Part_CarriageAdapter() {
 		rotate([0,105,0])
 			cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
 		}
-		
+
 		// adjuster bolt
 		translate([0, 0, rpCarriageAdapter_AdjustmentBoltOffset])
 		rotate([90,0,0])
 			Carve_hwBolt(hwNo8_Bolt_PanHead, 30);
-		
+
 		// mounting bolts
-		
+
 		translate([-rpCarriageAdapter_MountSpacing /2,0, -12 + rpCarriageAdapter_BaseBoltThickness])
 				Carve_hwBolt(hwNo8_Bolt_PanHead, 12);
-		
+
 		translate([rpCarriageAdapter_MountSpacing /2,0, -12 + rpCarriageAdapter_BaseBoltThickness])
 				Carve_hwBolt(hwNo8_Bolt_PanHead, 12);
-				
+
 		hull() {
 			translate([-rpCarriageAdapter_MountSpacing /2,0, 5])
 				cylinder(h = 2.5, d = 9, $fn = gcFacetSmall);
-		
+
 			translate([-rpCarriageAdapter_MountSpacing /2,0, 5])
 				cylinder(h = 5, d = 8, $fn = gcFacetSmall);
-				
+
 			translate([-rpCarriageAdapter_MountSpacing /2,0, 10])
 				sphere(d = 8, $fn = gcFacetSmall);
 		}
@@ -165,10 +167,10 @@ module Part_CarriageAdapter() {
 		hull() {
 			translate([rpCarriageAdapter_MountSpacing /2,0, 5])
 				cylinder(h = 2.5, d = 9, $fn = gcFacetSmall);
-		
+
 			translate([rpCarriageAdapter_MountSpacing /2,0, 5])
 				cylinder(h = 5, d = 8, $fn = gcFacetSmall);
-				
+
 			translate([rpCarriageAdapter_MountSpacing /2,0, 10])
 				sphere(d = 8, $fn = gcFacetSmall);
 		}
@@ -184,41 +186,67 @@ module Part_CarriageAdapter() {
 	}
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
 module CarriageBase_BeltCarveOut(length) {
 	height = 10.1 - rpCarriageAdapter_BaseThickness;
 		translate([0.7, -0.1, rpCarriageAdapter_BaseThickness])
 			cube([1.1, length + 0.2, height]);
-			
+
 		translate([-1.8, -0.1, rpCarriageAdapter_BaseThickness])
 			cube([1.1, length + 0.2, height]);
-		
+
 		for (i = [0 : 2 : length]) {
 			translate([2, i, rpCarriageAdapter_BaseThickness])
 			scale([2.5,1,1])
 			cylinder(h = height, d = 1, $fn = gcFacetSmall);
-			
+
 			translate([-2, i, rpCarriageAdapter_BaseThickness])
 			scale([2.5,1,1])
 			cylinder(h = height, d = 1, $fn = gcFacetSmall);
 		}
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
 module CarriageBase_BeltClamp(length) {
 		hull() {
+			// --
 			translate([rpCarriageAdapter_BeltPathWidth/2, length -1, 0])
-				cylinder( h = 10, d = 2, $fn = gcFacetSmall);
-			
+			scale([2,1,1])
+				cylinder( h = 2, d = 2, $fn = gcFacetSmall);
+
+			translate([rpCarriageAdapter_BeltPathWidth/2, length -1, 8])
+				sphere(d = 2, $fn = gcFacetSmall);
+
+			// --
 			translate([-rpCarriageAdapter_BeltPathWidth/2, length -1, 0])
-				cylinder( h = 10, d = 2, $fn = gcFacetSmall);
-			
+			scale([2,1,1])
+				cylinder( h = 2, d = 2, $fn = gcFacetSmall);
+
+			translate([-rpCarriageAdapter_BeltPathWidth/2, length -1, 8])
+				sphere(d = 2, $fn = gcFacetSmall);
+
+			// --
 			translate([rpCarriageAdapter_BeltPathWidth/2, 1, 0])
-				cylinder( h = 10, d = 2, $fn = gcFacetSmall);
-			
+			scale([2,1,1])
+				cylinder( h = 2, d = 2, $fn = gcFacetSmall);
+
+			translate([rpCarriageAdapter_BeltPathWidth/2, 1, 8])
+				sphere(d = 2, $fn = gcFacetSmall);
+
+			// --
 			translate([-rpCarriageAdapter_BeltPathWidth/2, 1, 0])
-				cylinder( h = 10, d = 2, $fn = gcFacetSmall);
+			scale([2,1,1])
+				cylinder( h = 2, d = 2, $fn = gcFacetSmall);
+
+			translate([-rpCarriageAdapter_BeltPathWidth/2, 1, 8])
+				sphere(d = 2, $fn = gcFacetSmall);
 		}
-	
+
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
 
 module CarriageAdapter_Base() {
 	difference() {
@@ -244,7 +272,7 @@ module CarriageAdapter_Base() {
 				translate([-rpCarriageAdapter_BaseWidth /2, -rpCarriageAdapter_BaseLength /2, 0])
 					cylinder(h = rpCarriageAdapter_BaseThickness, d = 4, $fn = gcFacetSmall);
 			}
-			
+
 			CarriageAdapter_SwivelArm();
 			mirror([1,0,0])
 				CarriageAdapter_SwivelArm();
@@ -257,41 +285,44 @@ module CarriageAdapter_Base() {
 	}
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
 module CarriageAdapter_SwivelArm() {
 	sphereSize = 6;
 	hull() {
 		translate([rpCarriageAdapter_BaseWidth /2 -1, rpCarriageAdapter_BaseLength /2 -1, 0])
 		sphere(d = sphereSize,  $fn = gcFacetSmall);
-	
+
 		translate([rpCarriageAdapter_BaseWidth /2 -1, -rpCarriageAdapter_BaseLength /2 +1, 0])
 		sphere(d = sphereSize,  $fn = gcFacetSmall);
-		
+
 		translate([rpCarriageAdapter_BaseWidth /2 -3, 0, 2])
 		rotate([90, 0, 90])
 		cylinder(h = 4, d = 10, $fn = gcFacetMedium);
 	}
-	
+
 	hull() {
 		translate([rpCarriageAdapter_BaseWidth /2 - 1, -rpCarriageAdapter_BaseLength /2 +1, 0])
 		sphere(d = sphereSize,  $fn = gcFacetSmall);
-	
+
 		translate([rpCarriageAdapter_BaseWidth /2 -3, 0, rpCarriageAdapter_SwivelOffset])
 			rotate([90, 0, 90])
 			cylinder(h = 4, d = 5, $fn = gcFacetMedium);
-			
+
 		translate([rpCarriageAdapter_BaseWidth /2 -2, 0, rpCarriageAdapter_SwivelOffset])
 			rotate([90, 0, 90])
 			cylinder(h = 2, d = 6, $fn = gcFacetMedium);
-			
-		
-			
+
+
+
 		translate([rpCarriageAdapter_BaseWidth /2 -3, 0, 2])
 		rotate([90, 0, 90])
 		cylinder(h = 4, d = 10, $fn = gcFacetMedium);
 	}
-	
+
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
 
 module CarriageAdapter_BeltPathCarveout() {
 	// carve out belt path
@@ -316,6 +347,8 @@ module CarriageAdapter_BeltPathCarveout() {
 
 	}
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
 
 module Hardware_CarriageAdapter() {
 	// mounting bolts
