@@ -69,12 +69,12 @@ module Part_CarriageAdapter() {
 
 			hull() {
 				// adjuster bolt cover
-				translate([0, 12.5, rpCarriageAdapter_AdjustmentBoltOffset])
+				translate([0, 2.5, rpCarriageAdapter_AdjustmentBoltOffset])
 				rotate([90,90,0])
-					cylinder(h = 25, d = 8, $fn = gcFacetMedium);
+					cylinder(h = 15, d = 8, $fn = gcFacetMedium);
 
 				// adjuster bolt cover
-				translate([0, 14, 2])
+				/*translate([0, 14, 2])
 				rotate([90,90,0])
 					cylinder(h = 30, d = 8, $fn = gcFacetMedium);
 
@@ -86,13 +86,51 @@ module Part_CarriageAdapter() {
 				// adjuster bolt cover
 				translate([0, 20, 0])
 				rotate([90,90,0])
-					cylinder(h = 30, d = 2, $fn = gcFacetMedium);
+					cylinder(h = 30, d = 2, $fn = gcFacetMedium);*/
+					
+				translate([0, 10, 2])
+					sphere(d = 6, $fn = gcFacetSmall);
 			}
 			
 			//CarriageAdapter_SwivelArm();
 		}
 
 		// carve outs
+		
+		// adjuster bolt
+		translate([0, 0, rpCarriageAdapter_AdjustmentBoltOffset])
+		rotate([90,0,0])
+			Carve_hwBolt(hwNo8_Bolt_PanHead, 30);
+		
+		// mounting bolts
+		
+		translate([-rpCarriageAdapter_MountSpacing /2,0, -12 + rpCarriageAdapter_BaseBoltThickness])
+				Carve_hwBolt(hwNo8_Bolt_PanHead, 12);
+		
+		translate([rpCarriageAdapter_MountSpacing /2,0, -12 + rpCarriageAdapter_BaseBoltThickness])
+				Carve_hwBolt(hwNo8_Bolt_PanHead, 12);
+				
+		hull() {
+			translate([-rpCarriageAdapter_MountSpacing /2,0, 5])
+				cylinder(h = 2.5, d = 9, $fn = gcFacetSmall);
+		
+			translate([-rpCarriageAdapter_MountSpacing /2,0, 5])
+				cylinder(h = 5, d = 8, $fn = gcFacetSmall);
+				
+			translate([-rpCarriageAdapter_MountSpacing /2,0, 10])
+				sphere(d = 8, $fn = gcFacetSmall);
+		}
+
+		hull() {
+			translate([rpCarriageAdapter_MountSpacing /2,0, 5])
+				cylinder(h = 2.5, d = 9, $fn = gcFacetSmall);
+		
+			translate([rpCarriageAdapter_MountSpacing /2,0, 5])
+				cylinder(h = 5, d = 8, $fn = gcFacetSmall);
+				
+			translate([rpCarriageAdapter_MountSpacing /2,0, 10])
+				sphere(d = 8, $fn = gcFacetSmall);
+		}
 
 		// adjuster nut
 		translate([0, -rpCarriageAdapter_AdjustmentNutOffset - 0, rpCarriageAdapter_AdjustmentBoltOffset])
@@ -172,7 +210,7 @@ module CarriageAdapter_SwivelArm() {
 			
 		translate([rpCarriageAdapter_BaseWidth /2 -3, 0, 2])
 		rotate([90, 0, 90])
-		cylinder(h = 4, d = 4, $fn = gcFacetMedium);
+		cylinder(h = 4, d = 10, $fn = gcFacetMedium);
 	}
 	
 }
