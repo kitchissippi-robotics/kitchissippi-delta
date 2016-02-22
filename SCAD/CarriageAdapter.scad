@@ -34,7 +34,7 @@ if (MultiPartMode == false) {
 	Hardware_CarriageAdapter();
 
 	// test render the swivel arm
-	%translate([0, -rpArm_PinDepth -rpArm_PinSeparation/2, rpCarriageAdapter_SwivelOffset])
+	*translate([0, -rpArm_PinDepth -rpArm_PinSeparation/2, rpCarriageAdapter_SwivelOffset])
 	rotate([-90,0,0])
 	{
 		Part_Pin_Swivel_Arm();
@@ -122,7 +122,7 @@ module Part_CarriageAdapter() {
 		// Right horizontal pin
 		translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation, 0, rpCarriageAdapter_SwivelOffset])
 		rotate([0,90,0])
-			cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
+			cylinder(h = hwPin_Length + 0.5, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
 
 		// Right horizontal pin mounting slot
 		hull() {
@@ -137,7 +137,7 @@ module Part_CarriageAdapter() {
 		// Left horizontal pin
 		translate([rpArm_Spacing /2 - hwPin_Diameter /2 - rpArm_PinSeparation, 0, rpCarriageAdapter_SwivelOffset])
 		rotate([0,-90,0])
-			cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
+			cylinder(h = hwPin_Length + 1, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
 
 		// left horizontal pin mounting slot
 		mirror([1,0,0]) hull() {
@@ -164,24 +164,24 @@ module Part_CarriageAdapter() {
 
 		hull() {
 			translate([-rpCarriageAdapter_MountSpacing /2,0, 5])
-				cylinder(h = 2.5, d = 9, $fn = gcFacetSmall);
+				cylinder(h = 2.5, d = 9, $fn = gcFacetMedium);
 
 			translate([-rpCarriageAdapter_MountSpacing /2,0, 5])
-				cylinder(h = 5, d = 8, $fn = gcFacetSmall);
+				cylinder(h = 5, d = 8, $fn = gcFacetMedium);
 
 			translate([-rpCarriageAdapter_MountSpacing /2,0, 10])
-				sphere(d = 8, $fn = gcFacetSmall);
+				sphere(d = 8, $fn = gcFacetMedium);
 		}
 
 		hull() {
 			translate([rpCarriageAdapter_MountSpacing /2,0, 5])
-				cylinder(h = 2.5, d = 9, $fn = gcFacetSmall);
+				cylinder(h = 2.5, d = 9, $fn = gcFacetMedium);
 
 			translate([rpCarriageAdapter_MountSpacing /2,0, 5])
-				cylinder(h = 5, d = 8, $fn = gcFacetSmall);
+				cylinder(h = 5, d = 8, $fn = gcFacetMedium);
 
 			translate([rpCarriageAdapter_MountSpacing /2,0, 10])
-				sphere(d = 8, $fn = gcFacetSmall);
+				sphere(d = 8, $fn = gcFacetMedium);
 		}
 
 		// adjuster nut
@@ -321,14 +321,14 @@ module CarriageAdapter_SwivelArm() {
 
 
 		// smaller swivel mount point
-		translate([rpCarriageAdapter_BaseWidth /2 -3 - inset, 0, rpCarriageAdapter_SwivelOffset])
+		translate([rpCarriageAdapter_BaseWidth /2 -4 - inset, 0, rpCarriageAdapter_SwivelOffset])
 			rotate([90, 0, 90])
-			cylinder(h = 4, d = 5, $fn = gcFacetMedium);
+			cylinder(h = 5, d = 6, $fn = gcFacetMedium);
 
 		// larger swivel mount point
 		translate([rpCarriageAdapter_BaseWidth /2 -2 - inset, 0, rpCarriageAdapter_SwivelOffset])
 			rotate([90, 0, 90])
-			cylinder(h = 2, d = 6, $fn = gcFacetMedium);
+			cylinder(h = 3, d = 8, $fn = gcFacetMedium);
 
 
 		// lower point

@@ -59,3 +59,5 @@ rpCarriageAdapter_AdjustmentWasherOffset = 22.5;
 
 rpCarriageAdapter_BeltPathWidth = 8.9;
 rpCarriageAdapter_BeltPathOffset = 8.9;
+
+rpCarriageAdapter_HosePostDiameter = 8;
