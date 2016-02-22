@@ -92,18 +92,18 @@ module Part_CarriageAdapter() {
 					sphere(d = 6, $fn = gcFacetSmall);
 			}
 			
-			translate([-rpCarriageAdapter_BeltPathOffset -1,8,0])
+			translate([-rpCarriageAdapter_BeltPathOffset,8,0])
 			CarriageBase_BeltClamp(12);
 			
-			translate([-rpCarriageAdapter_BeltPathOffset -1,-20,0])
+			translate([-rpCarriageAdapter_BeltPathOffset,-20,0])
 			CarriageBase_BeltClamp(12);
 			//CarriageAdapter_SwivelArm();
 		}
 		
-		translate([-rpCarriageAdapter_BeltPathOffset -1,8,0])
+		translate([-rpCarriageAdapter_BeltPathOffset,8,0])
 			CarriageBase_BeltCarveOut(12);
 			
-				translate([-rpCarriageAdapter_BeltPathOffset -1,-20,0])
+				translate([-rpCarriageAdapter_BeltPathOffset,-20,0])
 			CarriageBase_BeltCarveOut(12);
 
 		// carve outs
@@ -186,19 +186,19 @@ module Part_CarriageAdapter() {
 
 module CarriageBase_BeltCarveOut(length) {
 	height = 10.1 - rpCarriageAdapter_BaseThickness;
-		translate([1, -0.1, rpCarriageAdapter_BaseThickness])
-			cube([1, length + 0.2, height]);
+		translate([0.7, -0.1, rpCarriageAdapter_BaseThickness])
+			cube([1.1, length + 0.2, height]);
 			
-		translate([-2, -0.1, rpCarriageAdapter_BaseThickness])
-			cube([1, length + 0.2, height]);
+		translate([-1.8, -0.1, rpCarriageAdapter_BaseThickness])
+			cube([1.1, length + 0.2, height]);
 		
 		for (i = [0 : 2 : length]) {
 			translate([2, i, rpCarriageAdapter_BaseThickness])
-			scale([2,1,1])
+			scale([2.5,1,1])
 			cylinder(h = height, d = 1, $fn = gcFacetSmall);
 			
 			translate([-2, i, rpCarriageAdapter_BaseThickness])
-			scale([2,1,1])
+			scale([2.5,1,1])
 			cylinder(h = height, d = 1, $fn = gcFacetSmall);
 		}
 }
