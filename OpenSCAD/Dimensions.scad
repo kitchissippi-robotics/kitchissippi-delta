@@ -80,4 +80,6 @@ rpCarriageAdapter_HosePostDiameter = 8;
 // .....................................................................................................................
 
 rpArmRod_InsertDepth = 20;		// 15.5;	depth the arm rod is inserted into the rod end
-rpArmRod_HolderThickness = 3;	// how thick the rod holder should be around the rod
+rpArmRod_HolderThickness = 2;	// how thick the rod holder should be around the rod
+
+rpRodEnd_SwivelClearance = 16;
