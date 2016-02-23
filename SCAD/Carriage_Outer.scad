@@ -12,7 +12,7 @@
 // *********************************************************************************************************************
 
 include <Dimensions.scad>
-include <LinearCarriage_Common.scad>
+include <Carriage_Common.scad>
 
 // Determine if MultiPartMode is enabled - if not, render the part automatically
 // and enable support material (if it is defined)

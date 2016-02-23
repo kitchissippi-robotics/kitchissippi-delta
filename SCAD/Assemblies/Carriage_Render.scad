@@ -17,7 +17,7 @@
 // .....................................................................................................................
 
 include <OpenSCAD-Hardware/HardwareLib.scad>
-include <Configuration.scad>
+include <../Configuration.scad>
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Enable multipart mode
@@ -33,7 +33,7 @@ colourSecondary = "Lime";
 
 // Inner Carriage
 
-include <LinearCarriage_Inner.scad>
+include <../Carriage_Inner.scad>
 
 //color(colourPrimary)
 translate([0,0,15])
@@ -42,7 +42,7 @@ Part_LC_Inner();
 
 // Outer Carriage
 
-include <LinearCarriage_Outer.scad>
+include <../Carriage_Outer.scad>
 
 //color(colourSecondary)
 translate([0,0,-15])
@@ -50,7 +50,7 @@ Part_LC_Outer();
 
 // Carriage Adapter
 
-include <CarriageAdapter.scad>
+include <../Arm_CarriageAdapter.scad>
 
 //color(colourSecondary)
 translate([0,0,15])

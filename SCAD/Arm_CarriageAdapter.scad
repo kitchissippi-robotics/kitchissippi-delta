@@ -15,14 +15,8 @@ include <Configuration.scad>
 include <Dimensions.scad>
 include <OpenSCAD-Hardware/HardwareLib.scad>
 
-MultiPartMode = false;
-include <Pin_Swivel_Arm.scad>
-
 // Determine if MultiPartMode is enabled - if not, render the part automatically
 // and enable support material (if it is defined)
-
-*translate([0,-1, 0])
-import("../YellowCarriage.stl", convexity=3);
 
 if (undef == MultiPartMode) {
 	MultiPartMode = false;
@@ -32,14 +26,6 @@ if (undef == MultiPartMode) {
 if (MultiPartMode == false) {
 	Part_CarriageAdapter();
 	Hardware_CarriageAdapter();
-
-	// test render the swivel arm
-	*translate([0, -rpArm_PinDepth -rpArm_PinSeparation/2, rpCarriageAdapter_SwivelOffset])
-	rotate([-90,0,0])
-	{
-		Part_Pin_Swivel_Arm();
-		Hardware_Pin_Swivel_Arm();
-	}
 } else {
 	EnableSupport = false;
 }
