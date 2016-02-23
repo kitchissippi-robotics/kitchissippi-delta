@@ -39,13 +39,26 @@ rpLC_Carriage_VerticalPostSpacing = 30;		// 29 from SketchUp Design
 hwPin_Diameter = 3.6;	// bicycle chain pin diameter (in mm)
 hwPin_Length = 7.8;	// bicycle chain pin length (in mm)
 
+// ---------------------------------------------------------------------------------------------------------------------
+// Arm Rod - 1/4" aluminum rod
+// .....................................................................................................................
 
+hwArmRod_Diameter = 6.35;	// 1/4" to mm = 6.35 (rod has been sanded and filed, this may need to be adjusted
+hwArmRod_Length = 300;		// rods are cut and filed down to 300mm in length
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Arm Pin Dimensions
+// .....................................................................................................................
 
 rpArm_Spacing = 50;			// 	51; space between the rods on the same plane (in mm)
 rpArm_PinSeparation = 1;	// space between the two vertical pins (in mm)
 rpArm_PinDepth	= 5.2;		// how far the stationary pins should be embedded (in mm)
 
 rpSwivelArmHeight = rpArm_PinDepth * 2 + rpArm_PinSeparation;
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Arm_CarriageAdapter Dimensions
+// .....................................................................................................................
 
 rpCarriageAdapter_MountSpacing = 39;	// 39;	spacing between bolts to mount to the linear carriage
 rpCarriageAdapter_AdjustmentNutOffset = 15;	// 15.1; vertical offset from center line for the adjustment nut
@@ -61,3 +74,10 @@ rpCarriageAdapter_BeltPathWidth = 8.9;
 rpCarriageAdapter_BeltPathOffset = 8.9;
 
 rpCarriageAdapter_HosePostDiameter = 8;
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Arm_RodEnd Dimensions
+// .....................................................................................................................
+
+rpArmRod_InsertDepth = 20;		// 15.5;	depth the arm rod is inserted into the rod end
+rpArmRod_HolderThickness = 3;	// how thick the rod holder should be around the rod

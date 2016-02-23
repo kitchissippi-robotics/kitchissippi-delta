@@ -21,9 +21,7 @@ include <OpenSCAD-Hardware/HardwareLib.scad>
 if (undef == MultiPartMode) {
 	MultiPartMode = false;
 	EnableSupport = true;
-}
 
-if (MultiPartMode == false) {
 	Part_CarriageAdapter();
 	Hardware_CarriageAdapter();
 } else {
