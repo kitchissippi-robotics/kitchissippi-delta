@@ -83,3 +83,12 @@ rpArmRod_InsertDepth = 20;		// 15.5;	depth the arm rod is inserted into the rod 
 rpArmRod_HolderThickness = 2;	// how thick the rod holder should be around the rod
 
 rpRodEnd_SwivelClearance = 16;
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Effector_Base Dimensions
+// .....................................................................................................................
+
+rpEffectorBase_SwivelOffset = 30;	// distance from center that the pin swivels will sit at
+rpEffectorBase_BoltOffset = 30;		// distance from center that the bolt mounts will sit at
+rpEffectorBase_HotendOpening = 20;	// size of the central openning for the hotend
+rpEffectorBase_Thickness = hwPin_Diameter + 4;
