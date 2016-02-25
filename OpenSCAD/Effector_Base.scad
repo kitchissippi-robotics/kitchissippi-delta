@@ -33,11 +33,20 @@ if (undef == MultiPartMode) {
 module Part_Effector_Base() {
 	difference() {
 		union() {
+			// loop for the sides to effector
+			for (i = [0 : 1 : 3]) {
+				rotate([0,0,i * 120])
+				union() {
+					Effector_Base_SwivelArm();
+					mirror([1,0,0])
+						Effector_Base_SwivelArm();
+				}
+			}
 		}
 
 		// carveouts
 		// carveout central hole
-		#translate([0,0,-0.1])
+		translate([0,0,-0.1])
 			cylinder(h = rpEffectorBase_Thickness + 0.2, d = rpEffectorBase_HotendOpening, $fn = gcFacetLarge);
 
 		// loop for the sides to effector
@@ -45,13 +54,27 @@ module Part_Effector_Base() {
 			// carveout pin mounts
 			rotate([0,0,i * 120])
 			translate([0,rpEffectorBase_SwivelOffset,rpEffectorBase_Thickness/2])
-			#Effector_Base_MountingPinCarveOut();
+			Effector_Base_MountingPinCarveOut();
 
 			// carveout bolt mounts
 			rotate([0,0,i * 120 - 60])
 			translate([0,rpEffectorBase_BoltOffset,-0.1])
-			#cylinder(h = 10, d = 4, $fn = gcFacetSmall);
+			cylinder(h = 10, d = 4, $fn = gcFacetSmall);
 		}
+	}
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// one segment of the swivel mounts
+
+module Effector_Base_SwivelArm() {
+	hull() {
+	translate([-rpArm_Spacing /2 + 9,rpEffectorBase_SwivelOffset,rpEffectorBase_Thickness/2])
+	rotate([0,90,0])
+	cylinder(h = 6, d = rpEffectorBase_Thickness);
+
+	translate([0,0,0])
+			cylinder(h = rpEffectorBase_Thickness, d = rpEffectorBase_HotendOpening + 4, $fn = gcFacetLarge);
 	}
 }
 
