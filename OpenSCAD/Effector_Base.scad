@@ -52,8 +52,22 @@ module Part_Effector_Base() {
 
 		// carveouts
 		// carveout central hole
-		*translate([0,0,-0.1])
+
+		rotate([0,0,180])
+		union() {
+		hull() {
+		translate([0,0,-0.1])
 			cylinder(h = rpEffectorBase_Thickness + 0.2, d = rpEffectorBase_HotendOpening, $fn = gcFacetLarge);
+		translate([0,6,-0.1])
+			cylinder(h = rpEffectorBase_Thickness + 0.2, d = rpEffectorBase_HotendOpening, $fn = gcFacetLarge);
+		}
+
+		translate([0,6,-0.1])
+			cylinder(h = rpEffectorBase_Thickness + 0.2, d = 15.5, $fn = gcFacetLarge);
+
+		translate([0,0,4.6])
+			cylinder(h = 4.8, d = 15.5, $fn = gcFacetLarge);
+		}
 
 		// loop for the sides to effector
 		for (i = [0 : 1 : 2]) {
@@ -75,6 +89,9 @@ module Part_Effector_Base() {
 			translate([0,rpEffectorBase_BoltOffset,-0.1])
 			cylinder(h = 10, d = 4, $fn = gcFacetSmall);
 
+			rotate([0,0,i * 120 - 60])
+			translate([0,rpEffectorBase_BoltOffset,2])
+			#cylinder(h = 5, d1 = 8.6, d2 = 8.6, $fn = 6);
 		}
 
 	}
@@ -124,15 +141,16 @@ module Effector_Base_Centre() {
 }
 
 module Effector_Base_SwivelCarveOut() {
+	carveSize = 24;
 	hull() {
 	rotate([0,0,60])
 	translate([0,-22,-0.1])
 	scale([1,0.5,1])
-			cylinder(h = rpEffectorBase_Thickness + 0.2 + rpEffectorBase_SwivelZOffset, d = 25, $fn = gcFacetLarge);
+			cylinder(h = rpEffectorBase_Thickness + 0.2 + rpEffectorBase_SwivelZOffset, d = carveSize, $fn = gcFacetLarge);
 
 	rotate([0,0,60])
-	translate([-25/2,-50,-0.1])
-		cube([25, 20, 10]);
+	translate([-carveSize/2,-50,-0.1])
+		cube([carveSize, 20, 10]);
 	}
 }
 
@@ -160,10 +178,10 @@ module Effector_Base_BoltHolder() {
 
 	hull() {
 		translate([0,rpEffectorBase_BoltOffset,0])
-			cylinder(h = rpEffectorBase_Thickness + 0.4, d = 12, $fn = gcFacetMedium);
+			cylinder(h = rpEffectorBase_Thickness + 0.4, d = 11, $fn = gcFacetMedium);
 
 		translate([0,rpEffectorBase_BoltOffset, rpEffectorBase_Thickness /4])
-			cylinder(h = rpEffectorBase_Thickness /2, d = 15, $fn = gcFacetMedium);
+			cylinder(h = rpEffectorBase_Thickness /2, d = 12, $fn = gcFacetMedium);
 
 	}
 
