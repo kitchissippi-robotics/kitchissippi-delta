@@ -38,7 +38,9 @@ module Part_Effector_Base() {
 			for (i = [0 : 1 : 2]) {
 				rotate([0,0,i * 120])
 				 hull() {
+
 					Effector_Base_SwivelArm();
+
 					mirror([1, 0, 0])
 						Effector_Base_SwivelArm();
 				}
@@ -53,6 +55,7 @@ module Part_Effector_Base() {
 				}
 			}
 
+			Effector_Base_FanMount();
 		}
 
 
@@ -73,10 +76,10 @@ module Part_Effector_Base() {
 			cylinder(h = rpEffectorBase_Thickness + 1, d = 17, $fn = gcFacetLarge);
 
 		hull() {
-		translate([0,8,4.6])
+		translate([0,8,4.5])
 			cylinder(h = rpEffectorBase_Thickness + 1, d = 17, $fn = gcFacetLarge);
 
-		translate([0,0,4.6])
+		translate([0,0,4.5])
 			cylinder(h = 4.8, d = 16.5, $fn = gcFacetLarge);
 		}
 		}
@@ -97,23 +100,37 @@ module Part_Effector_Base() {
 			Effector_Base_SwivelCarveOut();
 
 			// carveout bolt mounts
-			#rotate([0,0,i * 120 - 60])
+			rotate([0,0,i * 120 - 60])
 			translate([0,rpEffectorBase_BoltOffset,-0.1])
-			cylinder(h = 10, d = 4, $fn = gcFacetSmall);
+			cylinder(h = 10, d = HW_Hole(4), $fn = gcFacetSmall);
 
-			*if (i == 2) {
+
 			rotate([0,0,i * 120 - 60])
 			translate([0,rpEffectorBase_BoltOffset,2])
-				cylinder(h = 5, d1 = 8.6, d2 = 8.6, $fn = 6);
-			}
+				cylinder(h = 10, d1 = 8.6, d2 = 8.6, $fn = 6);
+
 		}
 
+		rotate([0,0,90])
+		translate([rpEffectorBase_FanOffset,0,25/2 + 6])
+		Carve_25mmFan();
+
+
+
+		// fan bolts
+		translate([25/2 - 3,rpEffectorBase_FanOffset,rpEffectorBase_Thickness + 3])
+		rotate([90,0,0])
+		cylinder(h = 10, d = HW_Hole(3), $fn = gcFacetSmall);
+
+		translate([-25/2 + 3,rpEffectorBase_FanOffset,rpEffectorBase_Thickness + 3])
+		rotate([90,0,0])
+		cylinder(h = 10, d = HW_Hole(3), $fn = gcFacetSmall);
 	}
 
 
 
 	rotate([0,0,90])
-	translate([16,0,25/2 + 6])
+	translate([rpEffectorBase_FanOffset,0,25/2 + 6])
 	Draw_25mmFan();
 
 	MultiPartMode = true;
@@ -121,7 +138,7 @@ module Part_Effector_Base() {
 	include <./Vitamins/hotend-hexagon.scad>
 
 // ~~~ Part No. XC-HA-HOTENDS.COM-01 ~~~ (J-Head from hotends.com)
-	*translate([0, 0, -20])
+	*translate([0, 0, -5])
 	hotend_jhead();
 
 	mirror([0,0,1])
@@ -144,19 +161,48 @@ module Effector_Base_Centre() {
 
 
 	// loop for the sides to effector
-		for (i = [0 : 1 : 2]) {
+		*for (i = [0 : 1 : 2]) {
 
 
 			// carveout bolt mounts
-			#rotate([0,0,i * 120 - 60])
+			rotate([0,0,i * 120 - 60])
 			translate([0,rpEffectorBase_BoltOffset,-0.1])
-			cylinder(h = 10, d = HW_Hole(4), $fn = gcFacetSmall);
+			cylinder(h = 10, d = HW_Hole(4.1), $fn = gcFacetSmall);
 		}
 	}
 }
 
+module Effector_Base_FanMount() {
+	difference() {
+	hull() {
+	translate([-25/2 + 3,rpEffectorBase_FanOffset - 5,rpEffectorBase_Thickness + 3])
+		rotate([90,0,0])
+	cylinder(h = 3, d = 6);
+	translate([25/2 - 3,rpEffectorBase_FanOffset - 5,rpEffectorBase_Thickness + 3])
+		rotate([90,0,0])
+	cylinder(h = 3, d = 6);
+
+	translate([-28/2, rpEffectorBase_FanOffset - 8, 0])
+	cube([28, 3, rpEffectorBase_Thickness]);
+	}
+	// fan airflow zone
+		translate([0,rpEffectorBase_FanOffset,rpEffectorBase_Thickness + 25/2])
+		rotate([90,0,0])
+		cylinder(h = 10, d1 = 25, d2 = 23, $fn = gcFacetSmall);
+
+
+	}
+
+	translate([-25/2 + 3,rpEffectorBase_FanOffset - 5,rpEffectorBase_Thickness + 3])
+		rotate([90,0,0])
+	cylinder(h = 3, d = 6);
+	translate([25/2 - 3,rpEffectorBase_FanOffset - 5,rpEffectorBase_Thickness + 3])
+		rotate([90,0,0])
+	cylinder(h = 3, d = 6);
+}
+
 module Effector_Base_SwivelCarveOut() {
-	carveSize = 21;
+	carveSize = 23;
 	hull() {
 		rotate([0,0,60])
 		translate([0,-25,-0.1])
@@ -165,7 +211,7 @@ module Effector_Base_SwivelCarveOut() {
 
 		rotate([0,0,60])
 		translate([0,-25,-1])
-		scale([1,0.6,1])
+		scale([1,0.8,1])
 				cylinder(h = 1, d = carveSize + 1, $fn = gcFacetLarge);
 
 		rotate([0,0,60])
@@ -186,7 +232,7 @@ rotate([0,0,60])
 
 		rotate([0,0,60])
 		translate([0,-25,rpEffectorBase_Thickness])
-		scale([1,0.6,1])
+		scale([1,0.8,1])
 				cylinder(h = 1, d = carveSize + 1, $fn = gcFacetLarge);
 
 		rotate([0,0,60])
@@ -245,23 +291,21 @@ module Effector_Base_BoltHolder() {
 module Effector_Base_SwivelArm() {
 	hull() {
 
-	translate([-rpArm_Spacing /2 + 11,rpEffectorBase_SwivelOffset,rpEffectorBase_Thickness/2])
-	scale([0.9,1,1])
-	sphere(d = rpEffectorBase_Thickness, $fn = gcFacetSmall);
+		translate([-rpArm_Spacing /2 + 10,rpEffectorBase_SwivelOffset,rpEffectorBase_Thickness/2])
+		scale([0.9,1,1])
+		sphere(d = rpEffectorBase_Thickness, $fn = gcFacetSmall);
 
-	translate([-rpArm_Spacing /2 + 11, rpEffectorBase_SwivelOffset + 1, 0])
-	cylinder(h = 1, d = 3, $fn = gcFacetSmall);
+		translate([-rpArm_Spacing /2 + 10, rpEffectorBase_SwivelOffset + 1, 0])
+		cylinder(h = 1, d = 3, $fn = gcFacetSmall);
 
-	translate([-rpArm_Spacing /2 + 11,0,rpEffectorBase_Thickness/2])
-	scale([0.75,1,1])
-	sphere(d = rpEffectorBase_Thickness, $fn = gcFacetSmall);
+		translate([-rpArm_Spacing /2 + 10,0,rpEffectorBase_Thickness/2])
+		scale([0.75,1,1])
+		sphere(d = rpEffectorBase_Thickness, $fn = gcFacetSmall);
 
 
-	translate([-rpArm_Spacing /2 + 11,0,0/2])
-	cylinder(h = 1, d = 2, $fn = gcFacetSmall);
+		translate([-rpArm_Spacing /2 + 10,0,0/2])
+		cylinder(h = 1, d = 2, $fn = gcFacetSmall);
 
-	*translate([0,0,0])
-			cylinder(h = rpEffectorBase_Thickness, d = rpEffectorBase_HotendOpening + 4, $fn = gcFacetLarge);
 	}
 }
 
@@ -270,43 +314,43 @@ module Effector_Base_SwivelArm() {
 
 module Effector_Base_MountingPinCarveOut() {
 	// Right horizontal pin
-		translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation + 2, 0, 0])
+		translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation, 0, 0])
 		rotate([0,90,0])
 			cylinder(h = hwPin_Length + 0.5, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
 
 		// Right horizontal pin mounting slot
 		hull() {
-			translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation +1, 0, 0 +6])
+			translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation, 0, 0 +6])
 			rotate([0,105,0])
 				cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
-			translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation - 0, 0, 0 + 2])
+			translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation - 1, 0, 0 + 2])
 			rotate([0,105,0])
 				cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
 		}
 
 		// Left horizontal pin
 		mirror([1,0,0])
-		translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation + 2, 0, 0])
+		translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation, 0, 0])
 		rotate([0,90,0])
 			cylinder(h = hwPin_Length + 0.5, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
 
 		// left horizontal pin mounting slot
 		mirror([1,0,0])
-			hull() {
-			translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation +1, 0, 0 +6])
+		hull() {
+			translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation, 0, 0 +6])
 			rotate([0,105,0])
 				cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
-			translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation - 0, 0, 0 + 2])
+			translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation - 1, 0, 0 + 2])
 			rotate([0,105,0])
 				cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
 		}
 
-	translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation + 5.2, 0, 0])
+	translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation + 4, 0, 0])
 	rotate([0,90,0])
 	cylinder(h = 1, d1 = 20, d2 = 19);
 
 	mirror([1,0,0])
-	translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation + 5.2, 0, 0])
+	translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation + 4, 0, 0])
 	rotate([0,90,0])
 	cylinder(h = 1, d1 = 20, d2 = 19);
 }

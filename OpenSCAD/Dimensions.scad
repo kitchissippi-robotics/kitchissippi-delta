@@ -94,5 +94,5 @@ rpEffectorBase_BoltOffset = 20;		// distance from center that the bolt mounts wi
 rpEffectorBase_HotendOpening = 12.2;	// size of the central openning for the hotend
 rpEffectorBase_Thickness = 6;
 
-rpEffectorBase_FanOffset = 20;
+rpEffectorBase_FanOffset = 15;
 rpEffectorBase_FanAngle = -22;
