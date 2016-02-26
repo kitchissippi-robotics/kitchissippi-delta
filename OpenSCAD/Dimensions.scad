@@ -88,7 +88,7 @@ rpRodEnd_SwivelClearance = 16;
 // Effector_Base Dimensions
 // .....................................................................................................................
 
-rpEffectorBase_SwivelOffset = 30;	// distance from center that the pin swivels will sit at
+rpEffectorBase_SwivelOffset = 35;	// distance from center that the pin swivels will sit at
 rpEffectorBase_SwivelZOffset = 10;
 rpEffectorBase_BoltOffset = 20;		// distance from center that the bolt mounts will sit at
 rpEffectorBase_HotendOpening = 12.2;	// size of the central openning for the hotend

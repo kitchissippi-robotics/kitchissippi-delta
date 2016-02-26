@@ -42,9 +42,9 @@ module Part_Effector_Base() {
 					mirror([1, 0, 0])
 						Effector_Base_SwivelArm();
 				}
-				
+
 			}
-			
+
 			hull() {
 				for (i = [0 : 1 : 2]) {
 				rotate([0,0,i * 120 - 60])
@@ -71,7 +71,7 @@ module Part_Effector_Base() {
 
 		translate([0,8,-0.1])
 			cylinder(h = rpEffectorBase_Thickness + 1, d = 17, $fn = gcFacetLarge);
-		
+
 		hull() {
 		translate([0,8,4.6])
 			cylinder(h = rpEffectorBase_Thickness + 1, d = 17, $fn = gcFacetLarge);
@@ -101,7 +101,7 @@ module Part_Effector_Base() {
 			translate([0,rpEffectorBase_BoltOffset,-0.1])
 			cylinder(h = 10, d = 4, $fn = gcFacetSmall);
 
-			if (i == 2) {
+			*if (i == 2) {
 			rotate([0,0,i * 120 - 60])
 			translate([0,rpEffectorBase_BoltOffset,2])
 				cylinder(h = 5, d1 = 8.6, d2 = 8.6, $fn = 6);
@@ -123,7 +123,7 @@ module Part_Effector_Base() {
 // ~~~ Part No. XC-HA-HOTENDS.COM-01 ~~~ (J-Head from hotends.com)
 	*translate([0, 0, -20])
 	hotend_jhead();
-	
+
 	mirror([0,0,1])
 	%translate([0, 0, -51])
 	hexagon_hotend();
@@ -156,17 +156,54 @@ module Effector_Base_Centre() {
 }
 
 module Effector_Base_SwivelCarveOut() {
-	carveSize = 22;
+	carveSize = 21;
 	hull() {
-	rotate([0,0,60])
-	translate([0,-22,-0.1])
-	scale([1,0.5,1])
-			cylinder(h = rpEffectorBase_Thickness + 0.2 + rpEffectorBase_SwivelZOffset, d = carveSize, $fn = gcFacetLarge);
+		rotate([0,0,60])
+		translate([0,-25,-0.1])
+		scale([1,0.5,1])
+				cylinder(h = rpEffectorBase_Thickness + 0.2, d = carveSize, $fn = gcFacetLarge);
 
-	rotate([0,0,60])
-	translate([-carveSize/2,-50,-0.1])
-		cube([carveSize, 20, 10]);
+		rotate([0,0,60])
+		translate([0,-25,-1])
+		scale([1,0.6,1])
+				cylinder(h = 1, d = carveSize + 1, $fn = gcFacetLarge);
+
+		rotate([0,0,60])
+	translate([-(carveSize + 1)/2,-45,-1])
+		cube([carveSize + 1, 20, 1]);
+
+
+rotate([0,0,60])
+	translate([-carveSize/2,-45,-0.1])
+		cube([carveSize, 20, rpEffectorBase_Thickness + 0.2]);
 	}
+
+	hull() {
+		rotate([0,0,60])
+		translate([0,-25,-0.1])
+		scale([1,0.5,1])
+				cylinder(h = rpEffectorBase_Thickness + 0.2, d = carveSize, $fn = gcFacetLarge);
+
+		rotate([0,0,60])
+		translate([0,-25,rpEffectorBase_Thickness])
+		scale([1,0.6,1])
+				cylinder(h = 1, d = carveSize + 1, $fn = gcFacetLarge);
+
+		rotate([0,0,60])
+	translate([-(carveSize + 1)/2,-45,rpEffectorBase_Thickness])
+		cube([carveSize + 1, 20, 1]);
+
+		rotate([0,0,60])
+	translate([-carveSize/2,-45,-0.1])
+		cube([carveSize, 20, rpEffectorBase_Thickness + 0.2]);
+	}
+
+
+
+
+
+
+
 }
 
 module Effector_Base_SwivelCornerCarveOut() {
@@ -212,7 +249,7 @@ module Effector_Base_SwivelArm() {
 	scale([0.9,1,1])
 	sphere(d = rpEffectorBase_Thickness, $fn = gcFacetSmall);
 
-	#translate([-rpArm_Spacing /2 + 11, rpEffectorBase_SwivelOffset + 1, 0])
+	translate([-rpArm_Spacing /2 + 11, rpEffectorBase_SwivelOffset + 1, 0])
 	cylinder(h = 1, d = 3, $fn = gcFacetSmall);
 
 	translate([-rpArm_Spacing /2 + 11,0,rpEffectorBase_Thickness/2])
@@ -233,7 +270,7 @@ module Effector_Base_SwivelArm() {
 
 module Effector_Base_MountingPinCarveOut() {
 	// Right horizontal pin
-		#translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation + 2, 0, 0])
+		translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation + 2, 0, 0])
 		rotate([0,90,0])
 			cylinder(h = hwPin_Length + 0.5, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
 
@@ -264,6 +301,14 @@ module Effector_Base_MountingPinCarveOut() {
 				cylinder(h = hwPin_Length, d = HW_Hole(hwPin_Diameter), $fn=gcFacetSmall);
 		}
 
+	translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation + 5.2, 0, 0])
+	rotate([0,90,0])
+	cylinder(h = 1, d1 = 20, d2 = 19);
+
+	mirror([1,0,0])
+	translate([-rpArm_Spacing /2 + hwPin_Diameter /2 + rpArm_PinSeparation + 5.2, 0, 0])
+	rotate([0,90,0])
+	cylinder(h = 1, d1 = 20, d2 = 19);
 }
 
 module Draw_25mmFan() {
