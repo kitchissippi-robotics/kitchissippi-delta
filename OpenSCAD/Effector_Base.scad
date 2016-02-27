@@ -22,11 +22,51 @@ if (undef == MultiPartMode) {
 	MultiPartMode = false;
 	EnableSupport = true;
 
-	//color("Grey")
+	*color("Grey")
 	Part_Effector_Base();
-	//Hardware_Effector_Base();
+	*Hardware_Effector_Base();
+
+	color("Lime")
+	translate([0,0,-hwGrooveMount_HeadThickness])
+	Part_Effector_LockRing();
 } else {
 	EnableSupport = false;
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+module Part_Effector_LockRing() {
+	ringDiameter = hwGrooveMount_HeadDiameter + 5;
+	difference() {
+		union() {
+			for (i = [0 : 1 : 2]) {
+				hull() {
+					rotate([0,0,i * 120 - 60])
+					translate([0, rpEffectorBase_BoltOffset,0])
+					cylinder(h = hwGrooveMount_HeadThickness, d1 = 8, d2 = 11, $fn = gcFacetMedium);
+
+					cylinder(h = hwGrooveMount_HeadThickness, d = 11, $fn = gcFacetLarge);
+				}
+			}
+			hull() {
+				cylinder(h = hwGrooveMount_HeadThickness, d = ringDiameter - 1, $fn = gcFacetLarge);
+				translate([0,0, hwGrooveMount_HeadThickness /4])
+				cylinder(h = hwGrooveMount_HeadThickness /2, d = ringDiameter, $fn = gcFacetLarge);
+			}
+		}
+
+		// carve out
+		for (i = [0 : 1 : 2]) {
+
+			rotate([0,0,i * 120 - 60])
+			translate([0, rpEffectorBase_BoltOffset,-0.1])
+			cylinder(h = hwGrooveMount_HeadThickness + 0.2, d = HW_Hole(4), $fn = gcFacetMedium);
+
+		}
+
+		translate([0,0,-0.1])
+		cylinder(h = hwGrooveMount_HeadThickness + 0.2, d = hwGrooveMount_HeadDiameter, $fn = gcFacetLarge);
+	}
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -170,12 +210,12 @@ module Part_Effector_Base() {
 			difference() {
 				union() {
 					translate([0,0,rpEffectorBase_Thickness - 1.5])
-							rotate_extrude(angle = 180, convexity = 2)
+							rotate_extrude(angle = 180, convexity = 2, $fn = gcFacetLarge)
 							translate([9.9, 0, 0])
 							circle(d = 3);
 
 					translate([0,-8,rpEffectorBase_Thickness - 1.5])
-							rotate_extrude(angle = 180, convexity = 2)
+							rotate_extrude(angle = 180, convexity = 2, $fn = gcFacetLarge)
 							translate([9.9, 0, 0])
 							circle(d = 3);
 
@@ -240,37 +280,6 @@ module Part_Effector_Base() {
 		Carve_hwBolt(hwM3_Bolt_AllenHead, HW_Hole(20), 5);
 	}
 
-
-
-	rotate([0,0,90])
-	translate([rpEffectorBase_FanOffset,0,rpEffectorBase_Thickness + 25/2 ])
-	Draw_25mmFan();
-
-	// m3 bolt
-	translate([-21/2,rpEffectorBase_FanOffset - 15, rpEffectorBase_Thickness + 25/2 - 21/2])
-		rotate([-90,0,0])
-		Draw_hwBolt(hwM3_Bolt_AllenHead, 20);
-
-
-
-	// m3 bolt
-	translate([21/2,rpEffectorBase_FanOffset - 15,rpEffectorBase_Thickness + 25/2 - 21/2])
-		rotate([-90,0,0])
-		Draw_hwBolt(hwM3_Bolt_AllenHead, 20);
-
-
-
-	MultiPartMode = true;
-	include <./Vitamins/hotend-jhead.scad>
-	include <./Vitamins/hotend-hexagon.scad>
-
-// ~~~ Part No. XC-HA-HOTENDS.COM-01 ~~~ (J-Head from hotends.com)
-	*translate([0, 0, -5])
-	hotend_jhead();
-
-	mirror([0,0,1])
-	%translate([0, 0, -51])
-	hexagon_hotend();
 }
 
 
@@ -395,12 +404,6 @@ rotate([0,0,60])
 		cube([carveSize, 20, rpEffectorBase_Thickness + 0.2]);
 	}
 
-
-
-
-
-
-
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -508,6 +511,40 @@ module Effector_Base_MountingPinCarveOut() {
 	cylinder(h = 1, d1 = 20, d2 = 19);
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+module Hardware_Effector_Base() {
+		MultiPartMode = true;
+	include <./Vitamins/hotend-jhead.scad>
+	include <./Vitamins/hotend-hexagon.scad>
+
+// ~~~ Part No. XC-HA-HOTENDS.COM-01 ~~~ (J-Head from hotends.com)
+	*translate([0, 0, -5])
+	hotend_jhead();
+
+	mirror([0,0,1])
+	%translate([0, 0, -51])
+	hexagon_hotend();
+
+	rotate([0,0,90])
+	translate([rpEffectorBase_FanOffset,0,rpEffectorBase_Thickness + 25/2 ])
+		Draw_25mmFan();
+
+	// m3 bolt
+	translate([-21/2,rpEffectorBase_FanOffset - 15, rpEffectorBase_Thickness + 25/2 - 21/2])
+	rotate([-90,0,0])
+		Draw_hwBolt(hwM3_Bolt_AllenHead, 20);
+
+
+
+	// m3 bolt
+	translate([21/2,rpEffectorBase_FanOffset - 15,rpEffectorBase_Thickness + 25/2 - 21/2])
+	rotate([-90,0,0])
+		Draw_hwBolt(hwM3_Bolt_AllenHead, 20);
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
 module Draw_25mmFan() {
 	edgeCurve = 3;
 	fanDepth = 10;
@@ -532,26 +569,28 @@ module Draw_25mmFan() {
 	}
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
 module Carve_25mmFan() {
-	edgeCurve = 3.5;
+	edgeCurve = 3;
 	fanDepth = 10;
 	fanWidth = 25;
 
 	hull() {
 		translate([-fanDepth/2, fanWidth/2 - edgeCurve/2, fanWidth/2 - edgeCurve/2])
 		rotate([0,90,0])
-		cylinder(h = fanDepth, d = HW_Hole(edgeCurve), $fn = gcFacetSmall);
+		cylinder(h = fanDepth, d = HW_Hole(edgeCurve) + 0.5, $fn = gcFacetSmall);
 
 		translate([-fanDepth/2, -(fanWidth/2 - edgeCurve/2), fanWidth/2 - edgeCurve/2])
 		rotate([0,90,0])
-		cylinder(h = fanDepth, d = HW_Hole(edgeCurve), $fn = gcFacetSmall);
+		cylinder(h = fanDepth, d = HW_Hole(edgeCurve) + 0.5, $fn = gcFacetSmall);
 
 		translate([-fanDepth/2, fanWidth/2 - edgeCurve/2, -(fanWidth/2 - edgeCurve/2)])
 		rotate([0,90,0])
-		cylinder(h = fanDepth, d = HW_Hole(edgeCurve), $fn = gcFacetSmall);
+		cylinder(h = fanDepth, d = HW_Hole(edgeCurve) + 0.5, $fn = gcFacetSmall);
 
 		translate([-fanDepth/2, -(fanWidth/2 - edgeCurve/2), -(fanWidth/2 - edgeCurve/2)])
 		rotate([0,90,0])
-		cylinder(h = fanDepth, d = HW_Hole(edgeCurve), $fn = gcFacetSmall);
+		cylinder(h = fanDepth, d = HW_Hole(edgeCurve) + 0.5, $fn = gcFacetSmall);
 	}
 }
