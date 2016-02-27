@@ -90,7 +90,7 @@ rpRodEnd_SwivelClearance = 16;
 
 rpEffectorBase_SwivelOffset = 35;	// distance from center that the pin swivels will sit at
 rpEffectorBase_SwivelZOffset = 10;
-rpEffectorBase_BoltOffset = 24;		// distance from center that the bolt mounts will sit at
+rpEffectorBase_BoltOffset = 24.25;		// distance from center that the bolt mounts will sit at
 rpEffectorBase_HotendOpening = 12.2;	// size of the central openning for the hotend
 rpEffectorBase_Thickness = 6;
 
