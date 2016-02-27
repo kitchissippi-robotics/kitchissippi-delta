@@ -37,6 +37,8 @@ if (undef == MultiPartMode) {
 
 module Part_Effector_LockRing() {
 	ringDiameter = hwGrooveMount_HeadDiameter + 5;
+	thumbScrewClearance = 18;
+
 	difference() {
 		union() {
 			for (i = [0 : 1 : 2]) {
@@ -45,11 +47,13 @@ module Part_Effector_LockRing() {
 					translate([0, rpEffectorBase_BoltOffset,0])
 					cylinder(h = hwGrooveMount_HeadThickness, d1 = 8, d2 = 11, $fn = gcFacetMedium);
 
-					cylinder(h = hwGrooveMount_HeadThickness, d = 11, $fn = gcFacetLarge);
+					translate([0,0,-5])
+					cylinder(h = hwGrooveMount_HeadThickness + 5, d = 11, $fn = gcFacetLarge);
 				}
 			}
 			hull() {
-				cylinder(h = hwGrooveMount_HeadThickness, d = ringDiameter - 1, $fn = gcFacetLarge);
+				translate([0,0,-2])
+				cylinder(h = hwGrooveMount_HeadThickness + 2, d = ringDiameter - 1, $fn = gcFacetLarge);
 				translate([0,0, hwGrooveMount_HeadThickness /4])
 				cylinder(h = hwGrooveMount_HeadThickness /2, d = ringDiameter, $fn = gcFacetLarge);
 			}
@@ -59,13 +63,19 @@ module Part_Effector_LockRing() {
 		for (i = [0 : 1 : 2]) {
 
 			rotate([0,0,i * 120 - 60])
-			translate([0, rpEffectorBase_BoltOffset,-0.1])
-			cylinder(h = hwGrooveMount_HeadThickness + 0.2, d = HW_Hole(4), $fn = gcFacetMedium);
+			translate([0, rpEffectorBase_BoltOffset,-4])
+			cylinder(h = hwGrooveMount_HeadThickness + 5, d = HW_Hole(4), $fn = gcFacetMedium);
+
+			rotate([0,0,i * 120 - 60])
+			translate([0, rpEffectorBase_BoltOffset,-hwGrooveMount_HeadThickness -5])
+			cylinder(h = hwGrooveMount_HeadThickness + 5, d = thumbScrewClearance, $fn = gcFacetMedium);
 
 		}
 
 		translate([0,0,-0.1])
-		cylinder(h = hwGrooveMount_HeadThickness + 0.2, d = hwGrooveMount_HeadDiameter, $fn = gcFacetLarge);
+		cylinder(h = hwGrooveMount_HeadThickness + 0.2, d = hwGrooveMount_HeadDiameter + .25, $fn = gcFacetLarge);
+
+
 	}
 }
 

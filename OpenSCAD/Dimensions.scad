@@ -97,5 +97,5 @@ rpEffectorBase_Thickness = 6;
 rpEffectorBase_FanOffset = 15;
 rpEffectorBase_FanAngle = -22;
 
-hwGrooveMount_HeadThickness = 4.6;
-hwGrooveMount_HeadDiameter = 16;
+hwGrooveMount_HeadThickness = 4.8;
+hwGrooveMount_HeadDiameter = 16.2;
