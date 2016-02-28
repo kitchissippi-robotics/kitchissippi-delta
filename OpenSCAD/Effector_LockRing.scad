@@ -25,6 +25,14 @@ if (undef == MultiPartMode) {
 
 	//color("Lime")
 	Part_Effector_LockRing();
+
+	*rotate([0,-90,0])
+	linear_extrude(height = 1, center = false, convexity = 2)
+				LockRing_Profile();
+
+	*rotate_extrude(convexity = 2, $fn = gcFacetLarge)
+	rotate([0,0,90])
+		LockRing_Profile();
 } else {
 	EnableSupport = false;
 }
@@ -43,12 +51,33 @@ module Part_Effector_LockRing() {
 				hull() {
 					rotate([0,0,i * 120 - 60])
 					translate([0, rpEffectorBase_BoltOffset,0])
-					cylinder(h = hwGrooveMount_HeadThickness, d1 = 10, d2 = 9, $fn = gcFacetMedium);
+					cylinder(h = hwGrooveMount_HeadThickness, d1 = 12, d2 = 10, $fn = gcFacetMedium);
 
 					cylinder(h = hwGrooveMount_HeadThickness + 2,d = 11, $fn = gcFacetMedium);
 
 					cylinder(h = hwGrooveMount_HeadThickness + 3,d = 9, $fn = gcFacetMedium);
+
 				}
+
+				// bolt slot edges
+				hull() {
+					rotate([0,0,i * 120 - 72])
+					translate([0, rpEffectorBase_BoltOffset + 3,0])
+					cylinder(h = hwGrooveMount_HeadThickness, d = 2, $fn = gcFacetSmall);
+
+					rotate([0,0,i * 120 - 75])
+					translate([0, rpEffectorBase_BoltOffset - 3,0])
+					cylinder(h = hwGrooveMount_HeadThickness, d = 2, $fn = gcFacetSmall);
+
+					rotate([0,0,i * 120 - 72])
+					translate([0, rpEffectorBase_BoltOffset - 4,0])
+					cylinder(h = hwGrooveMount_HeadThickness, d = 2, $fn = gcFacetSmall);
+
+					rotate([0,0,i * 120 - 60])
+					translate([0, rpEffectorBase_BoltOffset,0])
+					cylinder(h = hwGrooveMount_HeadThickness, d1 = 12, d2 = 10, $fn = gcFacetMedium);
+				}
+
 
 				// twist handles
 				hull() {
@@ -60,33 +89,31 @@ module Part_Effector_LockRing() {
 					sphere(d = 3, $fn = gcFacetSmall);
 				}
 			}
-			hull() {
-				translate([0,0,0])
-				cylinder(h = hwGrooveMount_HeadThickness + 2, d = ringDiameter - 1, $fn = gcFacetLarge);
-				translate([0,0, 0])
-				cylinder(h = hwGrooveMount_HeadThickness /2, d = ringDiameter, $fn = gcFacetLarge);
 
-				translate([0,0, 6])
-				cylinder(h = hwGrooveMount_HeadThickness /2, d = ringDiameter /2, $fn = gcFacetLarge);
+			// grip details
 
-				*translate([0,0,hwGrooveMount_HeadThickness])
-					sphere(d = ringDiameter, $fn = gcFacetMedium);
+			for (i = [ 0 : 1 : 11]) {
+				hull() {
+				rotate([0,0,i * 30])
+					translate([0, 6.2,10])
+					sphere(h = 1, $fn = gcFacetSmall);
+
+				rotate([0,0,i * 30])
+					translate([0, 6.2,7])
+					sphere(h = 1, $fn = gcFacetSmall);
+				}
 			}
 
-			cylinder(h = 11, d = 13, $fn = gcFacetMedium);
-			translate([0,0,11])
-			rotate_extrude(angle = 180, convexity = 2, $fn = gcFacetLarge)
-							translate([5, 0, 0])
-							circle(d = 3);
 		}
 
 		// carve out
 
+		// filament path
 		cylinder(h = 20, d = HW_Hole(4), $fn = gcFacetSmall);
 
 		for (i = [0 : 1 : 2]) {
 
-			for (j = [0 : 1 : 10]) {
+			for (j = [0 : 1 : 15]) {
 			rotate([0,0,i * 120 - 60 - j])
 			translate([0, rpEffectorBase_BoltOffset,-4])
 			cylinder(h = hwGrooveMount_HeadThickness + 5, d = HW_Hole(4), $fn = gcFacetSmall);
@@ -108,11 +135,11 @@ module Part_Effector_LockRing() {
 		}
 
 		// pushfit
-		translate([0,0,hwGrooveMount_HeadThickness + 2])
-			cylinder(h = 6.5, d = 9, $fn = gcFacetMedium);
+		translate([0,0,0])
+			cylinder(h = 20, d = 10, $fn = gcFacetMedium);
 
 		translate([0,0,-0.1])
-		cylinder(h = hwGrooveMount_HeadThickness + 0.2, d = hwGrooveMount_HeadDiameter + .25, $fn = gcFacetLarge);
+		cylinder(h = hwGrooveMount_HeadThickness + 1, d = hwGrooveMount_HeadDiameter + 1, $fn = gcFacetLarge);
 
 		// carve off bottom
 		translate([-50,-50,-100])
@@ -131,4 +158,76 @@ module Part_Effector_LockRing() {
 							translate([thumbScrewClearance /2 - 6, 0, 0])
 							circle(d = 2);
 		}
+
+	rotate_extrude(convexity = 2, $fn = gcFacetLarge)
+			rotate([0,0,90])
+				LockRing_Profile();
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+module LockRing_Profile() {
+	difference() {
+		union() {
+		// top rounded shape
+			hull() {
+			translate([11, 5.5, 0])
+				circle(d = 2, $fn = gcFacetSmall);
+			translate([11, 6, 0])
+				circle(d = 2, $fn = gcFacetSmall);
+
+			translate([6.5,4.5,0])
+			square([3,2.5]);
+		}
+
+		// taper bit at bottom of pushfit connector holder
+		translate([6.5,6.5,0])
+		square([2,2]);
+
+		// bottom of pushfit connector
+			hull() {
+				translate([6.3, 2.6, 0])
+				circle(d = 1, $fn = gcFacetSmall);
+
+				translate([6.3, 7.5, 0])
+				circle(d = 1, $fn = gcFacetSmall);
+
+				translate([5.4, 2.6, 0])
+				circle(d = 1, $fn = gcFacetSmall);
+
+				translate([5.4, 7.5, 0])
+				circle(d = 1, $fn = gcFacetSmall);
+			}
+
+			hull() {
+				translate([4.5, 9.5, 0])
+					circle(d = 4, $fn = gcFacetSmall);
+
+				translate([6.3, 7.5, 0])
+					circle(d = 1, $fn = gcFacetSmall);
+
+				translate([3,8.5,0])
+				square([2,2]);
+
+				translate([0,8.5,0])
+				square([2,2.8]);
+			}
+		}
+
+		// carve out taper at the bottom of the pushfit connector
+		hull() {
+			translate([7.7,8.25,0])
+			circle(d = 2.5, $fn = gcFacetSmall);
+
+			translate([7,12.25,0])
+			circle(d = 2.5, $fn = gcFacetSmall);
+
+			translate([9.75,8.25,0])
+			circle(d = 2.5, $fn = gcFacetSmall);
+		}
+
+		// carve out hole for groovemount hotend
+		translate([0, 0, 0])
+		square([4.9,8.2]);
+	}
 }
