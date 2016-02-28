@@ -22,62 +22,17 @@ if (undef == MultiPartMode) {
 	MultiPartMode = false;
 	EnableSupport = true;
 
-	*color("Grey")
+	color("Grey")
 	Part_Effector_Base();
-	*Hardware_Effector_Base();
+	Hardware_Effector_Base();
 
-	color("Lime")
-	translate([0,0,-hwGrooveMount_HeadThickness])
-	Part_Effector_LockRing();
+
 } else {
 	EnableSupport = false;
 }
 
-// ---------------------------------------------------------------------------------------------------------------------
-
-module Part_Effector_LockRing() {
-	ringDiameter = hwGrooveMount_HeadDiameter + 5;
-	thumbScrewClearance = 18;
-
-	difference() {
-		union() {
-			for (i = [0 : 1 : 2]) {
-				hull() {
-					rotate([0,0,i * 120 - 60])
-					translate([0, rpEffectorBase_BoltOffset,0])
-					cylinder(h = hwGrooveMount_HeadThickness, d1 = 8, d2 = 11, $fn = gcFacetMedium);
-
-					translate([0,0,-5])
-					cylinder(h = hwGrooveMount_HeadThickness + 5, d = 11, $fn = gcFacetLarge);
-				}
-			}
-			hull() {
-				translate([0,0,-2])
-				cylinder(h = hwGrooveMount_HeadThickness + 2, d = ringDiameter - 1, $fn = gcFacetLarge);
-				translate([0,0, hwGrooveMount_HeadThickness /4])
-				cylinder(h = hwGrooveMount_HeadThickness /2, d = ringDiameter, $fn = gcFacetLarge);
-			}
-		}
-
-		// carve out
-		for (i = [0 : 1 : 2]) {
-
-			rotate([0,0,i * 120 - 60])
-			translate([0, rpEffectorBase_BoltOffset,-4])
-			cylinder(h = hwGrooveMount_HeadThickness + 5, d = HW_Hole(4), $fn = gcFacetMedium);
-
-			rotate([0,0,i * 120 - 60])
-			translate([0, rpEffectorBase_BoltOffset,-hwGrooveMount_HeadThickness -5])
-			cylinder(h = hwGrooveMount_HeadThickness + 5, d = thumbScrewClearance, $fn = gcFacetMedium);
-
-		}
-
-		translate([0,0,-0.1])
-		cylinder(h = hwGrooveMount_HeadThickness + 0.2, d = hwGrooveMount_HeadDiameter + .25, $fn = gcFacetLarge);
 
 
-	}
-}
 
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -551,6 +506,13 @@ module Hardware_Effector_Base() {
 	translate([21/2,rpEffectorBase_FanOffset - 15,rpEffectorBase_Thickness + 25/2 - 21/2])
 	rotate([-90,0,0])
 		Draw_hwBolt(hwM3_Bolt_AllenHead, 20);
+
+	include <Effector_LockRing.scad>
+
+	color("Lime")
+	translate([0,0,0])
+	mirror([0,0,1])
+	Part_Effector_LockRing();
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
