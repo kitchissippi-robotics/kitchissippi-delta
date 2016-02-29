@@ -95,11 +95,11 @@ module Part_Effector_LockRing() {
 			for (i = [ 0 : 1 : 11]) {
 				hull() {
 				rotate([0,0,i * 30])
-					translate([0, 6.2,10])
+					translate([0, 6.5,13])
 					sphere(h = 1, $fn = gcFacetSmall);
 
 				rotate([0,0,i * 30])
-					translate([0, 6.2,7])
+					translate([0, 6.5,7])
 					sphere(h = 1, $fn = gcFacetSmall);
 				}
 			}
@@ -146,7 +146,7 @@ module Part_Effector_LockRing() {
 		cube([100, 100, 100]);
 
 		// carve off top
-		translate([-50,-50,13])
+		*translate([-50,-50,13])
 		cube([100, 100, 100]);
 
 	}
@@ -171,9 +171,9 @@ module LockRing_Profile() {
 		union() {
 		// top rounded shape
 			hull() {
-			translate([11, 5.5, 0])
+			translate([14, 5.5, 0])
 				circle(d = 2, $fn = gcFacetSmall);
-			translate([11, 6, 0])
+			translate([14, 6, 0])
 				circle(d = 2, $fn = gcFacetSmall);
 
 			translate([6.5,4.5,0])
