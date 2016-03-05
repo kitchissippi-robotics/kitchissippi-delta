@@ -25,6 +25,12 @@ hwBoltRadius = HARDWARE_METRIC ? 2.3 : 2.4;
 hw608InnerRingRadius = 6;
 hw608BoreRadius = 4.1;
 
+hw608Thickness = 7;
+hw608OutsideDiameter = 21.8;
+hw608InsideDiameter = 8;
+hw608HubDiameter = 12;
+
+
 // Carriage Settings
 
 rpLC_Carriage_HorizontalPostSpacing = 45;	// 45 from SketchUp Design
