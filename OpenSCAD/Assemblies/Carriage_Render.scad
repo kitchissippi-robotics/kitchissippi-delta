@@ -16,8 +16,9 @@
 // Include and Configure the Hardware Library
 // .....................................................................................................................
 
-include <OpenSCAD-Hardware/HardwareLib.scad>
 include <../Configuration.scad>
+include <../Dimensions.scad>
+include <OpenSCAD-Hardware/HardwareLib.scad>
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Enable multipart mode
@@ -36,7 +37,7 @@ colourSecondary = "Lime";
 include <../Carriage_Inner.scad>
 
 //color(colourPrimary)
-translate([0,0,15])
+translate([0,0,18])
 mirror([0,0,1])
 Part_LC_Inner();
 
@@ -45,7 +46,7 @@ Part_LC_Inner();
 include <../Carriage_Outer.scad>
 
 //color(colourSecondary)
-translate([0,0,-15])
+translate([0,0,-18])
 Part_LC_Outer();
 
 // Carriage Adapter
@@ -53,7 +54,18 @@ Part_LC_Outer();
 include <../Arm_CarriageAdapter.scad>
 
 //color(colourSecondary)
-translate([0,0,15])
+translate([0,0,18])
 Part_CarriageAdapter();
 
+rotate([90,0,0])
+translate([0,0,-50])
+rotate([0,0,45])
+hw_SteelTube();
 
+rotate([90,90,0])
+translate([0,0,rpBearing_UpperOffset])
+Draw_BearingCluster(4.4);
+
+rotate([90,90,0])
+translate([0,0,-rpBearing_LowerOffset])
+Draw_BearingCluster(7.6);

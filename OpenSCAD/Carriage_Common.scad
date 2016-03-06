@@ -17,17 +17,18 @@ include <Dimensions.scad>
 include <OpenSCAD-Hardware/HardwareLib.scad>
 
 // ---------------------------------------------------------------------------------------------------------------------
-module LC_BearingPost (nutSide = false) {
+module LC_BearingPost (nutSide = false, postHeight = 16) {
 
 	// base
 	LC_BearingPostBase();
 
 	translate([0,0,4.2]) {
-		cylinder(r1 = 8, r = hw608InnerRingRadius, h = 1);
+		cylinder(h = postHeight, d = hw608InsideDiameter - 0.25, $fn = gcFacetSmall);
 	}
 
+
 	// bearing holder
-	difference() {
+	*difference() {
 		translate([0,0,5.2]) {
 			cylinder(r=hw608BoreRadius, h= 7);
 
@@ -38,7 +39,7 @@ module LC_BearingPost (nutSide = false) {
 	}
 
 	// spacer ridge
-	difference() {
+	*difference() {
 		translate([0,0,12.2]) {
 			cylinder(r=hw608BoreRadius - 0.5, h= 1.5);
 
@@ -82,24 +83,8 @@ module hw_SteelTube(length = 100) {
 
 }
 
-translate([0,0,-50])
-rotate([0,0,45])
-hw_SteelTube();
-
-hwSpacerThickess = 4.4;
-
-rpBearing_DefaultSpacing = 24 * 2;
-rpBearing_UpperOffset = 15;
-rpBearing_LowerOffset = 20;
-
-translate([0,0,rpBearing_UpperOffset])
-Draw_BearingCluster(4.4);
-
-translate([0,0,-rpBearing_LowerOffset])
-Draw_BearingCluster(7.6);
-
 // Figure out the horizontal offset between bearings in a cluster based on the spacer size and estimated compression
-hwSpacerCompressionFactor = 0.2;
+
 function HW_BearingOffset(spacerThickness) = (48 - (spacerThickness - hwSpacerCompressionFactor));
 
 // Figure out the spacing between bearings in a cluster based on the horizontal offset

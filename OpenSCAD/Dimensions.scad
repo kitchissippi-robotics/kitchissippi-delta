@@ -30,6 +30,7 @@ hw608OutsideDiameter = 21.8;
 hw608InsideDiameter = 8;
 hw608HubDiameter = 12;
 
+hwSpacerCompressionFactor = 0.2;
 
 // Carriage Settings
 
@@ -81,6 +82,12 @@ rpCarriageAdapter_BeltPathOffset = 8.9;
 
 rpCarriageAdapter_HosePostDiameter = 8;
 
+hwSpacerThickess = 4.4;
+
+rpBearing_DefaultSpacing = 24 * 2;
+rpBearing_UpperOffset = 15;
+rpBearing_LowerOffset = 20;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Arm_RodEnd Dimensions
 // .....................................................................................................................
@@ -105,3 +112,6 @@ rpEffectorBase_FanAngle = -22;
 
 hwGrooveMount_HeadThickness = 4.8;
 hwGrooveMount_HeadDiameter = 16.2;
+
+
+

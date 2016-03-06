@@ -44,6 +44,10 @@ module Part_LC_Inner() {
 					_LC_Inner_Base();
 			}
 
+			// post for bearing
+			*translate([hwHob_Diameter/2 + hw608OutsideDiameter/2, 0, 0])
+			cylinder(h = 16, d = hw608InsideDiameter - 0.25, $fn = gcFacetSmall);
+
 			// post bases
 			translate([-rpLC_Carriage_HorizontalPostSpacing /2, -rpLC_Carriage_VerticalPostSpacing /2, 0])
 				LC_BearingPostBase();
