@@ -83,6 +83,27 @@ module hw_SteelTube(length = 100) {
 
 }
 
+module Carve_hw_SteelTube(length = 100) {
+	edgeBevel = 2	;
+	tubeWidth = 20;
+
+	linear_extrude(height = length, centre = true)
+	hull() {
+		translate([tubeWidth / 2 - edgeBevel / 2, tubeWidth / 2 - edgeBevel / 2, 0])
+		circle(edgeBevel, $fn = gcFacetSmall);
+
+		translate([-(tubeWidth / 2 - edgeBevel / 2), tubeWidth / 2 - edgeBevel / 2, 0])
+		circle(edgeBevel, $fn = gcFacetSmall);
+
+		translate([tubeWidth / 2 - edgeBevel / 2, -(tubeWidth / 2 - edgeBevel / 2), 0])
+		circle(edgeBevel, $fn = gcFacetSmall);
+
+		translate([-(tubeWidth / 2 - edgeBevel / 2), -(tubeWidth / 2 - edgeBevel / 2), 0])
+		circle(edgeBevel, $fn = gcFacetSmall);
+	}
+
+}
+
 // Figure out the horizontal offset between bearings in a cluster based on the spacer size and estimated compression
 
 function HW_BearingOffset(spacerThickness) = (48 - (spacerThickness - hwSpacerCompressionFactor));

@@ -82,11 +82,14 @@ rpCarriageAdapter_BeltPathOffset = 8.9;
 
 rpCarriageAdapter_HosePostDiameter = 8;
 
-hwSpacerThickess = 4.4;
-
-rpBearing_DefaultSpacing = 24 * 2;
+rpBearing_DefaultSpacing = 24 * 2;	// baseline horizontal spacing of the bearing clusters if they were touching
 rpBearing_UpperOffset = 15;
 rpBearing_LowerOffset = 20;
+
+rpLC_CarriageThickness = 17.25;	// distance between the center line of the mechanism and the outside edge where the adapter mounts to
+
+hwUpperBearingSpacerWidth = 4.4;
+hwLowerBearingSpacerWidth = 7.6;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Arm_RodEnd Dimensions
