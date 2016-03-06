@@ -87,7 +87,7 @@ rotate([0,0,45])
 hw_SteelTube();
 
 hwSpacerThickess = 4.4;
-rpBearing_DefaultSpacing = 25.1 * 2;
+rpBearing_DefaultSpacing = 24 * 2;
 rpBearing_UpperOffset = 15;
 rpBearing_LowerOffset = 20;
 
@@ -97,7 +97,8 @@ hw_BearingCluster(4.4);
 translate([0,0,-rpBearing_LowerOffset])
 hw_BearingCluster(7.6);
 
-module hw_BearingCluster(spacerThickness) {
+module hw_BearingCluster(_spacerThickness, compressionFactor = 0.1) {
+	spacerThickness = _spacerThickness - compressionFactor;
 
 translate([-hw608Thickness /2 - spacerThickness /2, rpBearing_DefaultSpacing / 2 - spacerThickness /2, 0])
 import("Vitamins/608_bearing.stl");
