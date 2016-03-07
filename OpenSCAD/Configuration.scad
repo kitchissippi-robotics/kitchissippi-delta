@@ -20,6 +20,6 @@ HARDWARE_METRIC = false;
 
 //
 
-NOZZLE_SIZE = 0.4;
+NOZZLE_SIZE = 0.5;
 RENDER_LEVEL =4 ;	// use 1 for screen quality, 4 for print quality
 SLICER_COMPENSATION = 0.0;
