@@ -8,7 +8,7 @@
 // Written by bcantin@kitchissippi-robotics.com
 // Copyright (c) 2014-2016 Kitchissippi Robotics
 // ---------------------------------------------------------------------------------------------------------------------
-// LinearCarriage_Outer.scad
+// LinearCarriage_Inner.scad
 // *********************************************************************************************************************
 
 include <Dimensions.scad>
@@ -17,14 +17,22 @@ include <Carriage_Common.scad>
 // Determine if MultiPartMode is enabled - if not, render the part automatically
 // and enable support material (if it is defined)
 
-if (undef == MultiPartMode) {
+if (MultiPartMode == undef) {
 	MultiPartMode = false;
 	EnableSupport = true;
 
 	Part_LC_Outer();
+
+	translate([0,0,rpLC_OuterCarriageThickness])
+	Draw_LCo_Outer_Hardware();
 } else {
 	EnableSupport = false;
 }
+
+upperXOffset = HW_BearingOffset(hwUpperBearingSpacerWidth);
+lowerXOffset = HW_BearingOffset(hwLowerBearingSpacerWidth);
+
+hubThickness = 2;
 
 // *********************************************************************************************************************
 
@@ -32,103 +40,243 @@ module Part_LC_Outer() {
 
 	difference() {
 		union() {
-			difference() {
-				_LC_Outer_Base();
+				// ---- upper posts for bearings
+			translate([upperXOffset/2, -rpBearing_UpperOffset, rpLC_OuterCarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2])
+				cylinder(h = hw608Thickness, d = hw608InsideDiameter - 0.5, $fn = gcFacetSmall);
 
-				translate([0, 0, 2])
-				scale([0.90, 0.90, 1])
-					_LC_Outer_Base();
+			translate([-upperXOffset/2, -rpBearing_UpperOffset, rpLC_OuterCarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2])
+				cylinder(h = hw608Thickness, d = hw608InsideDiameter - 0.5, $fn = gcFacetSmall);
+
+			// ---- lower posts for bearings
+			translate([lowerXOffset/2, rpBearing_LowerOffset, rpLC_OuterCarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2])
+				cylinder(h = hw608Thickness, d = hw608InsideDiameter - 0.5, $fn = gcFacetSmall);
+
+			translate([-lowerXOffset/2, rpBearing_LowerOffset, rpLC_OuterCarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2])
+				cylinder(h = hw608Thickness, d = hw608InsideDiameter - 0.5, $fn = gcFacetSmall);
+
+			hull() {
+			_LCo_PostBases();
 			}
 
-			// post bases
-			translate([-rpLC_Carriage_HorizontalPostSpacing /2, -rpLC_Carriage_VerticalPostSpacing /2, 0])
-				LC_BearingPostBase();
+			_LCo_BearingHubs();
 
-			translate([-rpLC_Carriage_HorizontalPostSpacing /2, rpLC_Carriage_VerticalPostSpacing /2, 0])
-				LC_BearingPostBase();
+		}
 
-			translate([rpLC_Carriage_HorizontalPostSpacing /2, -rpLC_Carriage_VerticalPostSpacing /2, 0])
-				LC_BearingPostBase();
+		_LCo_BoltCarveOuts();
 
-			translate([rpLC_Carriage_HorizontalPostSpacing /2, rpLC_Carriage_VerticalPostSpacing /2, 0])
-				LC_BearingPostBase();
+		// adapter mounting bolts
 
-			// bearing surface
-			translate([-rpLC_Carriage_HorizontalPostSpacing /2, -rpLC_Carriage_VerticalPostSpacing /2, 6])
-				cylinder(d1 = 15, r = hw608BoreRadius, h = 1);
+		/*translate([rpCarriageAdapter_MountSpacing/2, 0, 30])
+		rotate([0,180,0])
+			Carve_hwBolt(hwNo8_Bolt_PanHead, 30);
 
-			translate([-rpLC_Carriage_HorizontalPostSpacing /2, rpLC_Carriage_VerticalPostSpacing /2, 6])
-				cylinder(d1 = 15, r = hw608BoreRadius, h = 1);
+		translate([-rpCarriageAdapter_MountSpacing/2, 0, 30])
+		rotate([0,180,0])
+			Carve_hwBolt(hwNo8_Bolt_PanHead, 30);
 
-			translate([rpLC_Carriage_HorizontalPostSpacing /2, -rpLC_Carriage_VerticalPostSpacing /2, 6])
-				cylinder(d1 = 15, r = hw608BoreRadius, h = 1);
+		// adapter mounting nuts
 
-			translate([rpLC_Carriage_HorizontalPostSpacing /2, rpLC_Carriage_VerticalPostSpacing /2, 6])
-				cylinder(d1 = 15, r = hw608BoreRadius, h = 1);
+		translate([rpCarriageAdapter_MountSpacing/2, 0, 3])
 
-			// bearing holder
-			translate([-rpLC_Carriage_HorizontalPostSpacing /2, -rpLC_Carriage_VerticalPostSpacing /2, 5.2])
-				cylinder(r=hw608BoreRadius, h =7.2);
+			cylinder(h = 10, d = HW_Hole(hwNutRadius * 2), $fn = 6);
 
-			translate([-rpLC_Carriage_HorizontalPostSpacing /2, rpLC_Carriage_VerticalPostSpacing /2, 5.2])
-				cylinder(r=hw608BoreRadius, h =7.2);
+		translate([-rpCarriageAdapter_MountSpacing/2, 0, 3])
 
-			translate([rpLC_Carriage_HorizontalPostSpacing /2, -rpLC_Carriage_VerticalPostSpacing /2, 5.2])
-				cylinder(r=hw608BoreRadius, h =7.2);
+			cylinder(h = 10, d = HW_Hole(hwNutRadius * 2), $fn = 6);*/
 
-			translate([rpLC_Carriage_HorizontalPostSpacing /2, rpLC_Carriage_VerticalPostSpacing /2, 5.2])
-				cylinder(r=hw608BoreRadius, h =7.2);
+		/*translate([-13.5, 5, 0.1]) {
+			mirror([1,0,0])
+			rotate([0,0,180])
+  		 text("K03", font = "Liberation Sans:style=Bold");
+ 		}*/
 
-			// spacer holder
-			translate([-rpLC_Carriage_HorizontalPostSpacing /2, -rpLC_Carriage_VerticalPostSpacing /2,12.2])
-				cylinder(r=hw608BoreRadius - 0.5, h= 1.5);
+		// steel frame/linear guide tube clearance
+		translate([0,0,rpLC_OuterCarriageThickness])
+		rotate([90,0,0])
+		translate([0,0,-50 ])
+		rotate([0,0,45])
+			Carve_hw_SteelTube();
 
-			translate([-rpLC_Carriage_HorizontalPostSpacing /2, rpLC_Carriage_VerticalPostSpacing /2,12.2])
-				cylinder(r=hw608BoreRadius - 0.5, h= 1.5);
+		// curved carve out at sides
 
-			translate([rpLC_Carriage_HorizontalPostSpacing /2, -rpLC_Carriage_VerticalPostSpacing /2,12.2])
-				cylinder(r=hw608BoreRadius - 0.5, h= 1.5);
+		sideCurveSize = 50;
+		sideCurveOffset = 36;
+		sideCurveRotate = 10;
 
-			translate([rpLC_Carriage_HorizontalPostSpacing /2, rpLC_Carriage_VerticalPostSpacing /2,12.2])
-				cylinder(r=hw608BoreRadius - 0.5, h= 1.5);
+		translate([sideCurveOffset,0,0.9])
+		rotate([0,0,sideCurveRotate])
+		scale([0.5,1,1])
+		cylinder(h = 3.1, d1 = sideCurveSize - 2, d2 = sideCurveSize -2, $fn = gcFacetLarge);
+
+		translate([sideCurveOffset,0,-0.1])
+		rotate([0,0,sideCurveRotate])
+		scale([0.5,1,1])
+		cylinder(h = 1.1, d1 = sideCurveSize, d2 = sideCurveSize - 2, $fn = gcFacetLarge);
+
+		translate([sideCurveOffset,0, 3.7])
+		rotate([0,0,sideCurveRotate])
+		scale([0.5,1,1])
+		cylinder(h = 3, d1 =sideCurveSize - 2, d2 = sideCurveSize + 2, $fn = gcFacetLarge);
+
+
+		translate([-sideCurveOffset,0,0.9])
+		rotate([0,0,-sideCurveRotate])
+		scale([0.5,1,1])
+		cylinder(h = 3.1, d1 = sideCurveSize - 2, d2 = sideCurveSize -2, $fn = gcFacetLarge);
+
+		translate([-sideCurveOffset,0,-0.1])
+		rotate([0,0,-sideCurveRotate])
+		scale([0.5,1,1])
+		cylinder(h = 1.1, d1 = sideCurveSize, d2 = sideCurveSize - 2, $fn = gcFacetLarge);
+
+		translate([-sideCurveOffset,0, 3.7])
+		rotate([0,0,-sideCurveRotate])
+		scale([0.5,1,1])
+		cylinder(h = 3, d1 =sideCurveSize - 2, d2 = sideCurveSize + 2, $fn = gcFacetLarge);
+
+		// curved carve out at bottom
+
+		bottomCurveSize = 50;
+		bottomCurveOffset = rpBearing_LowerOffset + 13;
+
+		translate([0,bottomCurveOffset,-0.1])
+		scale([1,0.5,1])
+		cylinder(h = 1.1, d1 = bottomCurveSize, d2 = bottomCurveSize - 2, $fn = gcFacetLarge);
+
+		translate([0,bottomCurveOffset,0.9])
+		scale([1,0.5,1])
+		cylinder(h = 3.1, d1 = bottomCurveSize - 2, d2 = bottomCurveSize -2, $fn = gcFacetLarge);
+
+		translate([0,bottomCurveOffset, 3.7])
+		scale([1,0.5,1])
+		cylinder(h = 3, d1 =bottomCurveSize - 2, d2 = bottomCurveSize + 2, $fn = gcFacetLarge);
+
+		// curved carve out at top
+
+		topCurveSize = 50;
+		topCurveOffset = rpBearing_UpperOffset + 12;
+
+		translate([0,-topCurveOffset,-0.1])
+		scale([1,0.5,1])
+		cylinder(h = 1.1, d1 = topCurveSize, d2 = topCurveSize - 2, $fn = gcFacetLarge);
+
+		translate([0,-topCurveOffset,0.9])
+		scale([1,0.5,1])
+		cylinder(h = 3.1, d1 = topCurveSize - 2, d2 = topCurveSize -2, $fn = gcFacetLarge);
+
+		translate([0,-topCurveOffset, 3.7])
+		scale([1,0.5,1])
+		cylinder(h = 4, d1 =topCurveSize - 2, d2 = topCurveSize + 4, $fn = gcFacetLarge);
+
+		// adjuster nut
+		/*translate([0, -rpCarriageAdapter_AdjustmentNutOffset - 0, -rpCarriageAdapter_AdjustmentBoltOffset])
+		rotate([90,90,0])
+			cylinder(h = 4, d = 11, $fn = 6);
+
+		// adjuster washer
+		translate([0, -rpCarriageAdapter_AdjustmentNutOffset - 7.25, -rpCarriageAdapter_AdjustmentBoltOffset])
+		rotate([90,90,0])
+			cylinder(h = 2, d = 12.25, $fn = gcFacetSmall);*/
+	}
+
+	_LCo_PostBases(false);
+
+	difference() {
+		_LCo_BearingHubs();
+		_LCo_BoltCarveOuts();
+	}
+}
+
+module _LCo_BoltCarveOuts(_carveBolts = true) {
+	if (true == _carveBolts) {
+		// -- upper bolt carveouts
+		translate([upperXOffset/2, -rpBearing_UpperOffset, 30 + 3.25])
+		rotate([0,180,0])
+			Carve_hwBolt(hwM4_Bolt_AllenHead, 40);
+
+		translate([-upperXOffset/2, -rpBearing_UpperOffset, 30 + 3.25])
+		rotate([0,180,0])
+			Carve_hwBolt(hwM4_Bolt_AllenHead, 40);
+
+		// -- lower bolt carveouts
+		translate([lowerXOffset/2, rpBearing_LowerOffset, 30 + 3.25])
+		rotate([0,180,0])
+			Carve_hwBolt(hwM4_Bolt_AllenHead, 40);
+
+		translate([-lowerXOffset/2, rpBearing_LowerOffset, 30 + 3.25])
+		rotate([0,180,0])
+			Carve_hwBolt(hwM4_Bolt_AllenHead, 40);
 
 	}
 
+		// washer carveouts
+		translate([upperXOffset/2, -rpBearing_UpperOffset, -0.1])
+			cylinder(h = 4.3, d = HW_Hole(hwNutRadius * 2), $fn = 6);
 
+		translate([-upperXOffset/2, -rpBearing_UpperOffset, -0.1])
+			cylinder(h = 4.3, d = HW_Hole(hwNutRadius * 2), $fn = 6);
 
-		// washer carveout
-		translate([-rpLC_Carriage_HorizontalPostSpacing /2, -rpLC_Carriage_VerticalPostSpacing /2, -0.1])
-			cylinder(h = 4.3, r = hwWasherRadius);
+		translate([lowerXOffset/2, rpBearing_LowerOffset, -0.1])
+			cylinder(h = 4.3, d = HW_Hole(hwNutRadius * 2), $fn = 6);
 
-		translate([rpLC_Carriage_HorizontalPostSpacing /2, -rpLC_Carriage_VerticalPostSpacing /2, -0.1])
-			cylinder(h = 4.3, r = hwWasherRadius);
+		translate([-lowerXOffset/2, rpBearing_LowerOffset, -0.1])
+			cylinder(h = 4.3, d = HW_Hole(hwNutRadius * 2), $fn = 6);
+}
 
-		translate([-rpLC_Carriage_HorizontalPostSpacing /2, rpLC_Carriage_VerticalPostSpacing /2, -0.1])
-			cylinder(h = 4.3, r = hwWasherRadius);
+module _LCo_BearingHubs() {
+	translate([upperXOffset/2, -rpBearing_UpperOffset, rpLC_OuterCarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness])
+				cylinder(h = hubThickness, d2 = hw608HubDiameter, d1 = hwNutRadius * 2 + 4, $fn = gcFacetMedium);
 
-		translate([rpLC_Carriage_HorizontalPostSpacing /2, rpLC_Carriage_VerticalPostSpacing /2, -0.1])
-			cylinder(h = 4.3, r = hwWasherRadius);
+	translate([-upperXOffset/2, -rpBearing_UpperOffset, rpLC_OuterCarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness])
+				cylinder(h = hubThickness, d2 = hw608HubDiameter, d1 = hwNutRadius * 2 + 4, $fn = gcFacetMedium);
 
+	translate([lowerXOffset/2, rpBearing_LowerOffset, rpLC_OuterCarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness])
+				cylinder(h = hubThickness, d2 = hw608HubDiameter, d1 = hwNutRadius * 2 + 4, $fn = gcFacetMedium);
 
-		// bolt carveout
-		translate([-rpLC_Carriage_HorizontalPostSpacing /2, -rpLC_Carriage_VerticalPostSpacing /2, -0.1])
-			cylinder(r=hwBoltRadius, h =20);
+	translate([-lowerXOffset/2, rpBearing_LowerOffset, rpLC_OuterCarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness])
+				cylinder(h = hubThickness, d2 = hw608HubDiameter, d1 = hwNutRadius * 2 + 4, $fn = gcFacetMedium);
+}
 
-		translate([-rpLC_Carriage_HorizontalPostSpacing /2, rpLC_Carriage_VerticalPostSpacing /2, -0.1])
-			cylinder(r=hwBoltRadius, h =20);
+module _LCo_PostBases(_carveBolts = true) {
+	difference() {
+		union() {
+			translate([-upperXOffset/2, -rpBearing_UpperOffset, 0])
+			hull() {
+				cylinder(h = rpLC_OuterCarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness, d = hwNutRadius * 2 + 4, $fn = gcFacetMedium);
+				translate([0,0, 1])
+					cylinder(h = rpLC_OuterCarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness - 2, d = hwNutRadius * 2 + 5, $fn = gcFacetMedium);
+			}
 
-		translate([rpLC_Carriage_HorizontalPostSpacing /2, -rpLC_Carriage_VerticalPostSpacing /2, -0.1])
-			cylinder(r=hwBoltRadius, h =20);
+			translate([upperXOffset/2, -rpBearing_UpperOffset, 0])
+			hull() {
+				cylinder(h = rpLC_OuterCarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness, d = hwNutRadius * 2 + 4, $fn = gcFacetMedium);
+				translate([0,0, 1])
+					cylinder(h = rpLC_OuterCarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness - 2, d = hwNutRadius * 2 + 5, $fn = gcFacetMedium);
+			}
 
-		translate([rpLC_Carriage_HorizontalPostSpacing /2, rpLC_Carriage_VerticalPostSpacing /2, -0.1])
-			cylinder(r=hwBoltRadius, h =20);
+			translate([-lowerXOffset/2, rpBearing_LowerOffset, 0])
+			hull() {
+				cylinder(h = rpLC_OuterCarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness, d = hwNutRadius * 2 + 4, $fn = gcFacetMedium);
+				translate([0,0, 1])
+					cylinder(h = rpLC_OuterCarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness - 2, d = hwNutRadius * 2 + 5, $fn = gcFacetMedium);
+			}
+
+			translate([lowerXOffset/2, rpBearing_LowerOffset, 0])
+			hull() {
+				cylinder(h = rpLC_OuterCarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness, d = hwNutRadius * 2 + 4, $fn = gcFacetMedium);
+				translate([0,0, 1])
+					cylinder(h = rpLC_OuterCarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness - 2, d = hwNutRadius * 2 + 5, $fn = gcFacetMedium);
+			}
+		}
+
+		_LCo_BoltCarveOuts(_carveBolts);
 	}
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-module _LC_Outer_Base() {
-	hull() {
+module _LCo_Outer_Base() {
+	*hull() {
 		translate([-rpLC_Carriage_HorizontalPostSpacing /2, -rpLC_Carriage_VerticalPostSpacing /2, 0])
 			LC_BearingPostBase();
 
@@ -141,4 +289,41 @@ module _LC_Outer_Base() {
 		translate([rpLC_Carriage_HorizontalPostSpacing /2, rpLC_Carriage_VerticalPostSpacing /2, 0])
 			LC_BearingPostBase();
 	}
+}
+
+module Draw_LCo_Outer_Hardware() {
+	// steel frame/linear guide tube
+	rotate([90,0,0])
+	translate([0,0,-50])
+	rotate([0,0,45])
+		hw_SteelTube();
+
+	// upper bearing cluster
+	rotate([90,90,0])
+	translate([0,0,rpBearing_UpperOffset])
+		Draw_BearingCluster(hwUpperBearingSpacerWidth);
+
+	// lower bearing cluster
+	rotate([90,90,0])
+	translate([0,0,-rpBearing_LowerOffset])
+		Draw_BearingCluster(hwLowerBearingSpacerWidth);
+
+		// -- upper bolts
+	#translate([upperXOffset/2, -rpBearing_UpperOffset, 30 + 3.25 - rpLC_OuterCarriageThickness])
+	rotate([0,180,0])
+		Draw_hwBolt(hwM4_Bolt_AllenHead, 30);
+
+	#translate([-upperXOffset/2, -rpBearing_UpperOffset, 30 + 3.25 - rpLC_OuterCarriageThickness])
+	rotate([0,180,0])
+		Draw_hwBolt(hwM4_Bolt_AllenHead, 30);
+
+	// -- lower bolts
+	#translate([lowerXOffset/2, rpBearing_LowerOffset, 30 + 3.25 - rpLC_OuterCarriageThickness])
+	rotate([0,180,0])
+		Draw_hwBolt(hwM4_Bolt_AllenHead, 30);
+
+	#translate([-lowerXOffset/2, rpBearing_LowerOffset, 30 + 3.25 - rpLC_OuterCarriageThickness])
+	rotate([0,180,0])
+		Draw_hwBolt(hwM4_Bolt_AllenHead, 30);
+
 }

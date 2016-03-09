@@ -30,13 +30,14 @@ MultiPartMode = true;
 // Set the rendering colour design
 
 colourPrimary = "Black";
-colourSecondary = "Lime";
+colourSecondary = "Yellow";
+colourTertiary = "Gray";
 
 // Inner Carriage
 
 include <../Carriage_Inner.scad>
 
-//color(colourPrimary)
+color(colourPrimary)
 translate([0,0,rpLC_CarriageThickness])
 mirror([0,0,1])
 Part_LC_Inner();
@@ -45,15 +46,15 @@ Part_LC_Inner();
 
 include <../Carriage_Outer.scad>
 
-//color(colourSecondary)
-translate([0,0,-rpLC_CarriageThickness])
+color(colourSecondary)
+translate([0,0,-rpLC_OuterCarriageThickness])
 Part_LC_Outer();
 
 // Carriage Adapter
 
 include <../Arm_CarriageAdapter.scad>
 
-//color(colourSecondary)
+color(colourTertiary)
 translate([0,0,rpLC_CarriageThickness])
 Part_CarriageAdapter();
 

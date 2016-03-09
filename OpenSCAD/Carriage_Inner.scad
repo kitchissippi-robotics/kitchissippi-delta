@@ -38,34 +38,28 @@ hubThickness = 2;
 
 module Part_LC_Inner() {
 
-
-
-
-
-
-
-
 	difference() {
 		union() {
 				// ---- upper posts for bearings
 			translate([upperXOffset/2, -rpBearing_UpperOffset, rpLC_CarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2])
-				cylinder(h = hw608Thickness, d = hw608InsideDiameter - 0.25, $fn = gcFacetSmall);
+				cylinder(h = hw608Thickness, d = hw608InsideDiameter - 0.5, $fn = gcFacetSmall);
 
 			translate([-upperXOffset/2, -rpBearing_UpperOffset, rpLC_CarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2])
-				cylinder(h = hw608Thickness, d = hw608InsideDiameter - 0.25, $fn = gcFacetSmall);
+				cylinder(h = hw608Thickness, d = hw608InsideDiameter - 0.5, $fn = gcFacetSmall);
 
 			// ---- lower posts for bearings
 			translate([lowerXOffset/2, rpBearing_LowerOffset, rpLC_CarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2])
-				cylinder(h = hw608Thickness, d = hw608InsideDiameter - 0.25, $fn = gcFacetSmall);
+				cylinder(h = hw608Thickness, d = hw608InsideDiameter - 0.5, $fn = gcFacetSmall);
 
 			translate([-lowerXOffset/2, rpBearing_LowerOffset, rpLC_CarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2])
-				cylinder(h = hw608Thickness, d = hw608InsideDiameter - 0.25, $fn = gcFacetSmall);
+				cylinder(h = hw608Thickness, d = hw608InsideDiameter - 0.5, $fn = gcFacetSmall);
 
 			hull() {
 			_LC_PostBases();
 			}
 
 			_LC_BearingHubs();
+
 		}
 
 		_LC_BoltCarveOuts();
@@ -97,21 +91,59 @@ module Part_LC_Inner() {
 		rotate([0,0,45])
 			Carve_hw_SteelTube();
 
+		// curved carve out at sides
+
+		sideCurveSize = 50;
+		sideCurveOffset = 38;
+		sideCurveRotate = 10;
+
+		translate([sideCurveOffset,0,0.9])
+		rotate([0,0,sideCurveRotate])
+		scale([0.5,1,1])
+		cylinder(h = 3.1, d1 = sideCurveSize - 2, d2 = sideCurveSize -2, $fn = gcFacetLarge);
+
+		translate([sideCurveOffset,0,-0.1])
+		rotate([0,0,sideCurveRotate])
+		scale([0.5,1,1])
+		cylinder(h = 1.1, d1 = sideCurveSize, d2 = sideCurveSize - 2, $fn = gcFacetLarge);
+
+		translate([sideCurveOffset,0, 3.7])
+		rotate([0,0,sideCurveRotate])
+		scale([0.5,1,1])
+		cylinder(h = 4, d1 =sideCurveSize - 2, d2 = sideCurveSize + 2, $fn = gcFacetLarge);
+
+
+		translate([-sideCurveOffset,0,0.9])
+		rotate([0,0,-sideCurveRotate])
+		scale([0.5,1,1])
+		cylinder(h = 3.1, d1 = sideCurveSize - 2, d2 = sideCurveSize -2, $fn = gcFacetLarge);
+
+		translate([-sideCurveOffset,0,-0.1])
+		rotate([0,0,-sideCurveRotate])
+		scale([0.5,1,1])
+		cylinder(h = 1.1, d1 = sideCurveSize, d2 = sideCurveSize - 2, $fn = gcFacetLarge);
+
+		translate([-sideCurveOffset,0, 3.7])
+		rotate([0,0,-sideCurveRotate])
+		scale([0.5,1,1])
+		cylinder(h = 4, d1 =sideCurveSize - 2, d2 = sideCurveSize + 2, $fn = gcFacetLarge);
+
 		// curved carve out at bottom
 
 		bottomCurveSize = 50;
+		bottomCurveOffset = rpBearing_LowerOffset + 14;
 
-		translate([0,30,-0.1])
+		translate([0,bottomCurveOffset,-0.1])
 		scale([1,0.5,1])
 		cylinder(h = 1.1, d1 = bottomCurveSize, d2 = bottomCurveSize - 2, $fn = gcFacetLarge);
 
-		translate([0,30,0.9])
+		translate([0,bottomCurveOffset,0.9])
 		scale([1,0.5,1])
 		cylinder(h = 3.1, d1 = bottomCurveSize - 2, d2 = bottomCurveSize -2, $fn = gcFacetLarge);
 
-		translate([0,30, 3.7])
+		translate([0,bottomCurveOffset, 3.7])
 		scale([1,0.5,1])
-		cylinder(h = 2, d1 =bottomCurveSize - 2, d2 = bottomCurveSize + 2, $fn = gcFacetLarge);
+		cylinder(h = 3, d1 =bottomCurveSize - 2, d2 = bottomCurveSize + 2, $fn = gcFacetLarge);
 
 		// adjuster nut
 		translate([0, -rpCarriageAdapter_AdjustmentNutOffset - 0, -rpCarriageAdapter_AdjustmentBoltOffset])
@@ -119,7 +151,7 @@ module Part_LC_Inner() {
 			cylinder(h = 4, d = 11, $fn = 6);
 
 		// adjuster washer
-		translate([0, -rpCarriageAdapter_AdjustmentNutOffset - 7.5, -rpCarriageAdapter_AdjustmentBoltOffset])
+		translate([0, -rpCarriageAdapter_AdjustmentNutOffset - 7.25, -rpCarriageAdapter_AdjustmentBoltOffset])
 		rotate([90,90,0])
 			cylinder(h = 2, d = 12.25, $fn = gcFacetSmall);
 	}
@@ -156,30 +188,30 @@ module _LC_BoltCarveOuts(_carveBolts = true) {
 
 		// washer carveouts
 		translate([upperXOffset/2, -rpBearing_UpperOffset, -0.1])
-			cylinder(h = 4.3, r = hwWasherRadius + 0.5, $fn = gcFacetSmall);
+			cylinder(h = 4.3, r = hwWasherRadius + 0.25, $fn = gcFacetSmall);
 
 		translate([-upperXOffset/2, -rpBearing_UpperOffset, -0.1])
-			cylinder(h = 4.3, r = hwWasherRadius + 0.5, $fn = gcFacetSmall);
+			cylinder(h = 4.3, r = hwWasherRadius + 0.25, $fn = gcFacetSmall);
 
 		translate([lowerXOffset/2, rpBearing_LowerOffset, -0.1])
-			cylinder(h = 4.3, r = hwWasherRadius + 0.5, $fn = gcFacetSmall);
+			cylinder(h = 4.3, r = hwWasherRadius + 0.25, $fn = gcFacetSmall);
 
 		translate([-lowerXOffset/2, rpBearing_LowerOffset, -0.1])
-			cylinder(h = 4.3, r = hwWasherRadius + 0.5, $fn = gcFacetSmall);
+			cylinder(h = 4.3, r = hwWasherRadius + 0.25, $fn = gcFacetSmall);
 }
 
 module _LC_BearingHubs() {
 	translate([upperXOffset/2, -rpBearing_UpperOffset, rpLC_CarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness])
-				cylinder(h = hubThickness, d2 = hw608HubDiameter, d1 = hw608HubDiameter + 2, $fn = gcFacetMedium);
+				cylinder(h = hubThickness, d2 = hw608HubDiameter, d1 = hw608HubDiameter + 4, $fn = gcFacetMedium);
 
 	translate([-upperXOffset/2, -rpBearing_UpperOffset, rpLC_CarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness])
-				cylinder(h = hubThickness, d2 = hw608HubDiameter, d1 = hw608HubDiameter + 2, $fn = gcFacetMedium);
+				cylinder(h = hubThickness, d2 = hw608HubDiameter, d1 = hw608HubDiameter + 4, $fn = gcFacetMedium);
 
 	translate([lowerXOffset/2, rpBearing_LowerOffset, rpLC_CarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness])
-				cylinder(h = hubThickness, d2 = hw608HubDiameter, d1 = hw608HubDiameter + 2, $fn = gcFacetMedium);
+				cylinder(h = hubThickness, d2 = hw608HubDiameter, d1 = hw608HubDiameter + 4, $fn = gcFacetMedium);
 
 	translate([-lowerXOffset/2, rpBearing_LowerOffset, rpLC_CarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness])
-				cylinder(h = hubThickness, d2 = hw608HubDiameter, d1 = hw608HubDiameter + 2, $fn = gcFacetMedium);
+				cylinder(h = hubThickness, d2 = hw608HubDiameter, d1 = hw608HubDiameter + 4, $fn = gcFacetMedium);
 }
 
 module _LC_PostBases(_carveBolts = true) {
@@ -187,30 +219,30 @@ module _LC_PostBases(_carveBolts = true) {
 		union() {
 			translate([-upperXOffset/2, -rpBearing_UpperOffset, 0])
 			hull() {
-				cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness, d = hwWasherRadius * 2 + 4, $fn = gcFacetSmall);
+				cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness, d = hwWasherRadius * 2 + 4, $fn = gcFacetMedium);
 				translate([0,0, 1])
-					cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness - 2, d = hwWasherRadius * 2 + 5, $fn = gcFacetSmall);
+					cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness - 2, d = hwWasherRadius * 2 + 5, $fn = gcFacetMedium);
 			}
 
 			translate([upperXOffset/2, -rpBearing_UpperOffset, 0])
 			hull() {
-				cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness, d = hwWasherRadius * 2 + 4, $fn = gcFacetSmall);
+				cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness, d = hwWasherRadius * 2 + 4, $fn = gcFacetMedium);
 				translate([0,0, 1])
-					cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness - 2, d = hwWasherRadius * 2 + 5, $fn = gcFacetSmall);
+					cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwUpperBearingSpacerWidth/2 - hubThickness - 2, d = hwWasherRadius * 2 + 5, $fn = gcFacetMedium);
 			}
 
 			translate([-lowerXOffset/2, rpBearing_LowerOffset, 0])
 			hull() {
-				cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness, d = hwWasherRadius * 2 + 4, $fn = gcFacetSmall);
+				cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness, d = hwWasherRadius * 2 + 4, $fn = gcFacetMedium);
 				translate([0,0, 1])
-					cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness - 2, d = hwWasherRadius * 2 + 5, $fn = gcFacetSmall);
+					cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness - 2, d = hwWasherRadius * 2 + 5, $fn = gcFacetMedium);
 			}
 
 			translate([lowerXOffset/2, rpBearing_LowerOffset, 0])
 			hull() {
-				cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness, d = hwWasherRadius * 2 + 4, $fn = gcFacetSmall);
+				cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness, d = hwWasherRadius * 2 + 4, $fn = gcFacetMedium);
 				translate([0,0, 1])
-					cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness - 2, d = hwWasherRadius * 2 + 5, $fn = gcFacetSmall);
+					cylinder(h = rpLC_CarriageThickness - hw608Thickness - hwLowerBearingSpacerWidth/2 - hubThickness - 2, d = hwWasherRadius * 2 + 5, $fn = gcFacetMedium);
 			}
 		}
 

@@ -14,7 +14,7 @@
 
 // Set this to true if using Metric hardware instead of SAE
 // NOTE - this functionality is incomplete, SAE is design default
-// Ultimated the Kitchissippi-Delta is a mix of hardware types
+// Ultimately the Kitchissippi-Delta is a mix of hardware types
 
 HARDWARE_METRIC = false;
 
